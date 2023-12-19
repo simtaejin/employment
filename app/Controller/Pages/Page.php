@@ -17,18 +17,18 @@ class Page {
 
     private static $menus = [
         [
-            'label' => 'menu1',
-            'title' => '메뉴1',
-            'link'  => URL."/page/page_1"
+            'label' => 'guin',
+            'title' => '구인관리',
+            'link'  => URL."/page/guin"
         ],
         [
-            'label' => 'menu2',
-            'title' => '메뉴2',
-            'link'  => URL."/page/page_2"
+            'label' => 'gujig',
+            'title' => '구직관리',
+            'link'  => URL."/page/gujig"
         ],
         [
-            'label' => 'menu3',
-            'title' => '메뉴3',
+            'label' => 'employment',
+            'title' => '취업관리',
             'submenu'=>[
                 ['label' => 'menu3_1', 'title' => '메뉴3_1', 'link' => URL.'/page/page_3_1'],
                 ['label' => 'menu3_2', 'title' => '메뉴3_2', 'link' => URL.'/page/page_3_2'],
