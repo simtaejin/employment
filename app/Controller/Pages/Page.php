@@ -29,10 +29,7 @@ class Page {
         [
             'label' => 'employment',
             'title' => '취업관리',
-            'submenu'=>[
-                ['label' => 'menu3_1', 'title' => '메뉴3_1', 'link' => URL.'/page/page_3_1'],
-                ['label' => 'menu3_2', 'title' => '메뉴3_2', 'link' => URL.'/page/page_3_2'],
-            ],
+            'link'  => URL."/page/employment"
         ],
     ];
 

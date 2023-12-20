@@ -15,26 +15,14 @@ $obRouter->get('/page/guin',[
     }
 ]);
 
-//$obRouter->get('/about',[
-//    function() {
-//        return new Response(200, Pages\About::getAbout());
-//    }
-//]);
-//
-//$obRouter->get('/pagina/{idPagina}/{acao}',[
-//    function($idPagina,$acao) {
-//        return new Response(200, 'pagina '.$idPagina.' - '.$acao);
-//    }
-//]);
-//
-//$obRouter->get('/depoimento',[
-//    function($request) {
-//        return new Response(200, Pages\Testimony::getTestimonies($request));
-//    }
-//]);
-//
-//$obRouter->post('/depoimento', [
-//    function($request) {
-//        return new Response(200, Pages\Testimony::insertTestimony($request));
-//    }
-//]);
+$obRouter->get('/page/gujig',[
+    function() {
+        return new Response(200, Pages\Gujig::getGujig());
+    }
+]);
+
+$obRouter->get('/page/employment',[
+    function() {
+        return new Response(200, Pages\Employment::getEmploymentCreate());
+    }
+]);
