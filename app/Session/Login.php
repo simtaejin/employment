@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Session\Admin;
+namespace App\Session;
 
 class Login {
 
@@ -14,7 +14,7 @@ class Login {
 
         self::init();
 
-        $_SESSION['admin']['usuario'] = [
+        $_SESSION['user']['usuario'] = [
             'id' => $obUser->id,
             'nome' => $obUser->nome,
             'email' => $obUser->email
@@ -27,13 +27,13 @@ class Login {
 
         self::init();
 
-        return isset($_SESSION['admin']['usuario']['id']);
+        return isset($_SESSION['user']['usuario']['id']);
     }
 
     public static function logout() {
         self::init();
 
-        unset($_SESSION['admin']['usuario']);
+        unset($_SESSION['user']['usuario']);
 
         return true;
     }

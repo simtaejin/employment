@@ -9,20 +9,4 @@ $obRouter->get('/',[
     }
 ]);
 
-$obRouter->get('/page/guin',[
-    function() {
-        return new Response(200, Pages\Guin::getGuin());
-    }
-]);
-
-$obRouter->get('/page/gujig',[
-    function() {
-        return new Response(200, Pages\Gujig::getGujig());
-    }
-]);
-
-$obRouter->get('/page/employment',[
-    function() {
-        return new Response(200, Pages\Employment::getEmploymentCreate());
-    }
-]);
+include __DIR__ . '/employments.php';

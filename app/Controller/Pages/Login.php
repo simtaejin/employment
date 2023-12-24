@@ -1,16 +1,18 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\Pages;
 
-use \App\Utils\View;
-use \App\Model\Entity\User;
-use \App\Session\Admin\Login as SessionAdminLogin;
+use App\Controller\Admin\Alert;
+use App\Controller\Pages\Page;
+use App\Model\Entity\User;
+use App\Session\Login as SessionAdminLogin;
+use App\Utils\View;
 
 class Login extends Page {
 
     public static function getLogin($request, $errorMessage = null) {
 
-        $content = View::render('admin/login',[
+        $content = View::render('pages/login',[
             'status' => !is_null($errorMessage) ? Alert::getError($errorMessage) : ''
         ]);
 
@@ -34,12 +36,12 @@ class Login extends Page {
 
         SessionAdminLogin::login($obUser);
 
-        $request->getRouter()->redirect('/admin');
+        $request->getRouter()->redirect('/');
     }
 
     public static function setLogout($request) {
         SessionAdminLogin::logout();
 
-        $request->getRouter()->redirect('/admin/login');
+        $request->getRouter()->redirect('/login');
     }
 }
