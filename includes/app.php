@@ -19,13 +19,14 @@ Database::config(
 define('URL', getenv('URL'));
 
 View::init([
-    'URL' => URL
+    'URL' => URL,
+    'REQUEST_URI' => $_SERVER['REQUEST_URI'],
 ]);
 
 MiddlewareQueue::setMap([
     'maintenance' => \App\Http\Middleware\maintenance::class,
-    'required-admin-logout' => \App\Http\Middleware\RequireLogout::class,
-    'required-admin-login' => \App\Http\Middleware\RequireLogin::class,
+    'required-logout' => \App\Http\Middleware\RequireLogout::class,
+    'required-login' => \App\Http\Middleware\RequireLogin::class,
     'api' => \App\Http\Middleware\Api::class,
 ]);
 

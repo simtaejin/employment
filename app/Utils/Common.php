@@ -1,9 +1,8 @@
 <?php
-namespace app\Utils;
+namespace App\Utils;
 
 
 use App\Model\Entity\Member as EntityMmeber;
-use App\Model\Entity\BoardTypeSymbol as EntityBoardTypeSymbol;
 use Exception;
 
 class Common{
@@ -57,9 +56,9 @@ class Common{
     }
 
     public static function get_manager() {
-        if (!$_SESSION['manager']) return null;
+        if (!$_SESSION['user']) return null;
 
-        return $_SESSION['manager']['user']['id'];
+        return $_SESSION['user'];
     }
 
     public static function getInterval($key = '') {

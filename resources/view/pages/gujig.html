@@ -21,112 +21,108 @@
                     </div>
                     <div class="card-body">
                         <div class="mb-2 row">
-                            <!--                            <label class="col-3 col-form-label required">구인자 이름</label>-->
                             <label class="col-3 col-form-label">구직자 이름</label>
                             <div class="col-md-9">
-                                <div class="col-auto ms-auto ">
-                                    <div class="d-flex">
-                                        <div class="me-3">
-                                            <div class="input-icon">
-                                                <input type="text" value="" class="form-control" placeholder="이름 검색">
-                                                <span class="input-icon-addon">
+                                <form name="frm_search">
+                                    <div class="col-auto ms-auto ">
+                                        <div class="d-flex">
+                                            <div class="me-3">
+                                                <div class="input-icon">
+                                                    <input type="text" name="search_name" id="search_name" value="" class="form-control" placeholder="이름 검색">
+                                                    <span class="input-icon-addon">
                                                 <!-- Download SVG icon from http://tabler-icons.io/i/search -->
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>
                                                 </span>
+                                                </div>
                                             </div>
+                                            <button type="button" name="search_button" class="btn btn-primary">
+                                                <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
+                                                검색
+                                            </button>
                                         </div>
-                                        <a href="#" class="btn btn-primary">
-                                            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
-                                            검색
-                                        </a>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <select class="form-control" style="height: 400px;" multiple>
+                            <select name="search_list" class="form-control" style="height: 400px;" multiple>
 
                             </select>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-9 d-flex flex-column">
-                    <div class="card-header">
-                        <h3 class="card-title">구직자 정보</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="row g-3">
-                            <div class="col-md">
-                                <div class="form-label">접수번호</div>
-                                <input type="text" class="form-control" name="example-disabled-input" placeholder="Disabled..." value="Well, she turned me into a newt." disabled="">
-                            </div>
-                            <div class="col-md">
-                                <div class="form-label">이름</div>
-                                <input type="text" class="form-control" placeholder="이름" name="name" value="">
-                            </div>
-                            <div class="col-md">
-                                <div class="form-label">주민번호</div>
-                                <input type="text" class="form-control" placeholder="주민번호" name="jumin" value="">
-                            </div>
-                            <!--
-                                <div class="col-md">
-                                    <div class="form-label">Location</div>
-                                    <input type="text" class="form-control"
-                                           value="Peimei, China">
-                                </div>
-                            -->
+                    <form name="frm_gujig" id="frm_gujig" action="" method="post">
+                        <input type="hidden" name="idx" id="idx" value="{{idx}}">
+                        <div class="card-header">
+                            <h3 class="card-title">구직자 정보</h3>
                         </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-md">
+                                    <div class="form-label">접수번호</div>
+                                    <input type="text" class="form-control" name="registerNumber" placeholder="접수번호" value="{{registerNumber}}">
+                                </div>
+                                <div class="col-md">
+                                    <div class="form-label">이름</div>
+                                    <input type="text" class="form-control" placeholder="이름" name="gujigName" value="{{gujigName}}">
+                                </div>
+                                <div class="col-md">
+                                    <div class="form-label">주민번호</div>
+                                    <input type="text" class="form-control" placeholder="주민번호" name="jumin" value="{{jumin}}">
+                                </div>
+                            </div>
 
-                        <h3 class="card-title mt-4">주소</h3>
-                        <div>
-                            <div class="row g-2">
-                                <div class="col-auto">
-                                    <input type="text" class="form-control w-auto" placeholder="우편번호" name="postcode" id="postcode" value="">
+                            <h3 class="card-title mt-4">주소</h3>
+                            <div>
+                                <div class="row g-2">
+                                    <div class="col-auto">
+                                        <input type="text" class="form-control w-auto" placeholder="우편번호" name="postcode" id="postcode" value="{{postcode}}">
+                                    </div>
+                                    <div class="col-auto">
+                                        <button type="button" name="address_search" id="address_search" class="btn btn-outline-info">검색</button>
+                                    </div>
                                 </div>
-                                <div class="col-auto">
-                                    <button type="button" name="address_search" id="address_search" class="btn btn-outline-info">검색</button>
+                                <div class="row g-2">
+                                    <div class="col-md">
+                                        <input type="text" class="form-control" placeholder="도로명" name="roadAddress" id="roadAddress" value="{{roadAddress}}">
+                                    </div>
+                                    <div class="col-md">
+                                        <input type="text" class="form-control" placeholder="지번" name="jibunAddress" id="jibunAddress" value="{{jibunAddress}}">
+                                    </div>
+                                </div>
+                                <div class="row g-2">
+                                    <div class="col-md">
+                                        <input type="text" class="form-control" placeholder="상세주소" name="detailAddress" id="detailAddress" value="{{detailAddress}}">
+                                    </div>
+                                    <div class="col-md">
+                                        <input type="text" class="form-control" placeholder="참고항목" name="extraAddress" id="extraAddress" value="{{extraAddress}}">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row g-2">
+
+                            <div class="row g-3 mt-4">
                                 <div class="col-md">
-                                    <input type="text" class="form-control" placeholder="도로명" name="roadAddress" id="roadAddress" value="">
+                                    <div class="form-label">전화번호</div>
+                                    <input type="text" class="form-control" placeholder="전화번호" name="phoneNumber_1" id="phoneNumber_1" value="{{phoneNumber_1}}">
                                 </div>
                                 <div class="col-md">
-                                    <input type="text" class="form-control" placeholder="지번" name="jibunAddress" id="jibunAddress" value="">
+                                    <div class="form-label">전화번호</div>
+                                    <input type="text" class="form-control" placeholder="전화번호" name="phoneNumber_2" id="phoneNumber_2" value="{{phoneNumber_2}}">
                                 </div>
                             </div>
-                            <div class="row g-2">
-                                <div class="col-md">
-                                    <input type="text" class="form-control" placeholder="상제주소" name="detailAddress" id="detailAddress" value="">
-                                </div>
-                                <div class="col-md">
-                                    <input type="text" class="form-control" placeholder="참고항목" name="extraAddress" id="extraAddress" value="">
-                                </div>
+
+                        </div>
+                        <div class="card-footer bg-transparent mt-auto">
+                            <div class="btn-list justify-content-end">
+                                <a href="/page/gujig" class="btn">
+                                    입력 초기화
+                                </a>
+                                <button type="button" name="frm_gujig_btn" id="frm_gujig_btn" class="btn">저장</button>
                             </div>
                         </div>
-
-                        <div class="row g-3 mt-4">
-                            <div class="col-md">
-                                <div class="form-label">전화번호</div>
-                                <input type="text" class="form-control" placeholder="전화번호" name="phoneNumber_1" id="phoneNumber_1" value="">
-                            </div>
-                            <div class="col-md">
-
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="card-footer bg-transparent mt-auto">
-                        <div class="btn-list justify-content-end">
-                            <a href="#" class="btn">
-                                Cancel
-                            </a>
-                            <a href="#" class="btn btn-primary">
-                                Submit
-                            </a>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -192,6 +188,53 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(function () {
+        $("[name='search_button']").click(function(){
+            if ($("[name='search_name']").val() == "") {alert('검색어를 입력 하세요.');return false;}
+
+            $.ajax({
+                url:'/page/gujig_search',
+                type:'post',
+                data:$("[name='frm_search']").serialize(),
+                dataType: "json",
+                success:function(obj){
+                    $("[name='search_list']").empty();
+                    if (obj.success) {
+                        $.each(obj.data, function (key, value) {
+                            $("[name='search_list']").append(
+                                $("<option></option>").attr("value",obj.data[key]['idx']).text(obj.data[key]['registerNumber'] +' | '+ obj.data[key]['gujigName'])
+                            )
+                        })
+                    }
+                }
+            })
+        });
+
+        $("[name='search_list']").dblclick(function() {
+            location.href='/page/gujig/'+$(this).val();
+        });
+
+        $("[name='frm_gujig_btn']").click(function(){
+            if ($("[name='registerNumber']").val() == "") {alert('접수번호를 입력 하세요.');return false;}
+            if ($("[name='gujigName']").val() == "") {alert('이름을 입력 하세요.');return false;}
+            if ($("[name='jumin']").val() == "") {alert('주민번호을 입력 하세요.');return false;}
+            if ($("[name='postcode']").val() == "") {alert('우편번호를 입력 하세요.');return false;}
+            if ($("[name='roadAddress']").val() == "") {alert('도로명을 입력 하세요.');return false;}
+            if ($("[name='jibunAddress']").val() == "") {alert('지번을 입력 하세요.');return false;}
+            if ($("[name='detailAddress']").val() == "") {alert('상세주로를 입력 하세요.');return false;}
+            if ($("[name='extraAddress']").val() == "") {alert('참고항목을 입력 하세요.');return false;}
+            if ($("[name='phoneNumber_1']").val() == "") {alert('전화번호를 입력 하세요.');return false;}
+            if ($("[name='phoneNumber_2']").val() == "") {alert('전화번호를 입력 하세요.');return false;}
+
+
+            $("[name='frm_gujig']").attr("action","/page/gujig");
+            $("[name='frm_gujig']").submit();
+
+        });
+    });
+</script>

@@ -10,14 +10,16 @@ class Login {
         }
     }
 
-    public static function login($obUser) {
+    public static function login($obMember) {
 
         self::init();
 
-        $_SESSION['user']['usuario'] = [
-            'id' => $obUser->id,
-            'nome' => $obUser->nome,
-            'email' => $obUser->email
+        $_SESSION['user'] = [
+            'idx' => $obMember->idx,
+            'id' => $obMember->member_id,
+            'name' => $obMember->member_name,
+            'email' => $obMember->member_email,
+            'company' => $obMember->member_company,
         ];
 
         return true;
@@ -27,13 +29,13 @@ class Login {
 
         self::init();
 
-        return isset($_SESSION['user']['usuario']['id']);
+        return isset($_SESSION['user']['id']);
     }
 
     public static function logout() {
         self::init();
 
-        unset($_SESSION['user']['usuario']);
+        unset($_SESSION['user']);
 
         return true;
     }

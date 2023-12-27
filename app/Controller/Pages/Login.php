@@ -4,8 +4,9 @@ namespace App\Controller\Pages;
 
 use App\Controller\Admin\Alert;
 use App\Controller\Pages\Page;
-use App\Model\Entity\User;
-use App\Session\Login as SessionAdminLogin;
+use App\Model\Entity\Member;
+use App\Session\Login as SessionLogin;
+use App\Utils\Common;
 use App\Utils\View;
 
 class Login extends Page {
@@ -21,26 +22,27 @@ class Login extends Page {
 
     public static function setLogin($request) {
         $postVars = $request->getPostVars();
-        $email    = $postVars['email'] ?? '';
-        $senha    = $postVars['senha'] ?? '';
+        $member_id    = $postVars['member_id'] ?? '';
+        $member_password    = $postVars['member_password'] ?? '';
 
-        $obUser = User::getUserByEmail($email);
+        $obMember = Member::getMemberById($member_id);
 
-        if (!$obUser instanceof User) {
-            return self::getLogin($request, 'E-mail Error');
+        if (!$obMember instanceof Member) {
+            return self::getLogin($request, 'id Error');
         }
 
-        if (!password_verify($senha, $obUser->senha)) {
+        if (!password_verify($member_password, $obMember->member_password)) {
             return  self::getLogin($request, 'password Error');
         }
 
-        SessionAdminLogin::login($obUser);
+        SessionLogin::login($obMember);
 
-        $request->getRouter()->redirect('/');
+        $request->getRouter()->redirect('/page/guin');
+
     }
 
     public static function setLogout($request) {
-        SessionAdminLogin::logout();
+        SessionLogin::logout();
 
         $request->getRouter()->redirect('/login');
     }
