@@ -25,6 +25,16 @@ class Employment
         return (new Database('employment '))->select($where, $order, $limit, $fields);
     }
 
+    public static function getGujigsByGuinIdx($guinIdx)
+    {
+        return (new Database('employment '))->select("guinIdx =". $guinIdx,'','','*');
+    }
+
+    public static function getGuinsByGujigIdx($gujigIdx)
+    {
+        return (new Database('employment '))->select("gujigIdx =". $gujigIdx,'','','*');
+    }
+
     public function created()
     {
         $this->created_at = date('Y-m-d H:i:s');

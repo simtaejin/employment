@@ -5,7 +5,9 @@ namespace App\Controller\Pages;
 use \App\Controller\Pages\Page;
 use \App\Utils\Common;
 use \App\Utils\View;
+use \App\Model\Entity\Guin as EntityGuin;
 use \App\Model\Entity\Gujig as EntityGujig;
+use App\Model\Entity\Employment as EntityEmployment;
 
 class Gujig extends Page {
 
@@ -23,6 +25,7 @@ class Gujig extends Page {
             'extraAddress' => '',
             'phoneNumber_1' => '',
             'phoneNumber_2' => '',
+            'guinLists' => '',
         ]);
 
         return parent::getPanel('', $content, 'gujig');
@@ -47,7 +50,7 @@ class Gujig extends Page {
         $obj->phoneNumber_1 = $postVars['phoneNumber_1'];
         $obj->phoneNumber_2 = $postVars['phoneNumber_2'];
 
-        if (isset($postVars['idx'])) {
+        if (!empty($postVars['idx'])) {
             $_idx = $obj->updated();
             Common::error_loc_msg('/page/gujig/'.$postVars['idx'], '수정 되었습니다.');
         } else {
@@ -57,7 +60,7 @@ class Gujig extends Page {
     }
 
     public static function getViewGujig($idx) {
-        $obj = EntityGujig::getGujig('idx='.$idx)->fetchObject(EntityGujig::class);
+        $obj = EntityGujig::getGujig('idx='.$idx,'','')->fetchObject(EntityGujig::class);
 
         $content = View::render('pages/gujig', [
             'idx' => $obj->idx,
@@ -71,9 +74,50 @@ class Gujig extends Page {
             'extraAddress' => $obj->extraAddress,
             'phoneNumber_1' => $obj->phoneNumber_1,
             'phoneNumber_2' => $obj->phoneNumber_2,
+            'guinLists' => self::guinLists($idx),
         ]);
 
-        return parent::getPanel('', $content, 'guin');
+        return parent::getPanel('', $content, 'gujig');
+    }
+
+    public static function guinLists($idx)
+    {
+        if (!empty($idx)) {
+            $emp_obj = EntityEmployment::getGuinsByGujigIdx($idx);
+
+            $array = array();
+            $i = 0;
+
+            while ($emp = $emp_obj->fetchObject(EntityEmployment::class)) {
+                $guin_info = EntityGujig::getGujig('idx='.$idx,'','')->fetchObject(EntityGujig::class);
+
+                $array[$i]['registerNumber'] = $guin_info->registerNumber;
+                $array[$i]['gujigName'] = $guin_info->gujigName;
+                $array[$i]['roadAddress'] = $guin_info->roadAddress;
+                $array[$i]['detailAddress'] = $guin_info->detailAddress;
+                $array[$i]['phoneNumber_1'] = $guin_info->phoneNumber_1;
+                $array[$i]['phoneNumber_2'] = $guin_info->phoneNumber_2;
+                $array[$i]['applicationTime'] = $emp->applicationTime;
+                $array[$i]['applicationDate'] = $emp->applicationDate;
+
+                $i++;
+            }
+
+            $rows = "";
+            foreach ($array as $k => $v) {
+                $rows .= View::render('pages/guinList', [
+                    'idx' => $k+1,
+                    'registerNumber' => $v['registerNumber'],
+                    'gujigName' => $v['gujigName'],
+                    'address' => $v['roadAddress']." ".$v['detailAddress'],
+                    'phone'=>$v['phoneNumber_1']." / ".$v['phoneNumber_2'],
+                    'applicationDate' => $v['applicationDate'],
+                    'applicationTime' => $v['applicationTime'],
+                ]);
+            }
+        }
+
+        return $rows;
     }
 
     public static function getGujigSearch($request) {
