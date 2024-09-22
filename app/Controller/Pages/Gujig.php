@@ -29,6 +29,7 @@ class Gujig extends Page {
             'duesDate' => '',
             'joinStatusOptions' => self::getJoinStatusOptions(),
             'bigo' => '',
+            'gujigLists' => self::guGujigLists(),
             'guinLists' => '',
         ]);
 
@@ -82,6 +83,32 @@ class Gujig extends Page {
         }
     }
 
+    public static function guGujigLists()
+    {
+        $gujig_obj = EntityGujig::getGujig('','','');
+
+        $array = array();
+        $i = 0;
+
+        while ($emp = $gujig_obj->fetchObject(EntityGujig::class)) {
+            $array[$i]['idx'] = $emp->idx;
+            $array[$i]['registerNumber'] = $emp->registerNumber;
+            $array[$i]['gujigName'] = $emp->gujigName;
+
+            $i++;
+        }
+
+        $rows = "";
+        foreach ($array as $k => $v) {
+            $rows .= View::render('pages/saramListOptions', [
+                'idx' => $v['idx'],
+                'text' => $v['registerNumber']." | ".$v['gujigName'],
+            ]);
+        }
+
+        return $rows;
+    }
+
     public static function getViewGujig($idx) {
         $obj = EntityGujig::getGujig('idx='.$idx,'','')->fetchObject(EntityGujig::class);
 
@@ -101,6 +128,7 @@ class Gujig extends Page {
             'duesDate' => substr($obj->duesDate, 0, 10),
             'joinStatusOptions' => self::getJoinStatusOptions($obj->joinStatus),
             'bigo' => strip_tags($obj->bigo),
+            'gujigLists' => self::guGujigLists(),
             'guinLists' => self::guinLists($idx),
         ]);
 

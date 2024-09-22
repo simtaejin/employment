@@ -30,6 +30,7 @@ class Guin extends Page
             'duesDate' => '',
             'joinStatusOptions' => self::getJoinStatusOptions(),
             'bigo' => '',
+            'guinLists' => self::guinLists(),
             'gujinLists' =>''
         ]);
 
@@ -102,12 +103,38 @@ class Guin extends Page
             'duesDate' => substr($obj->duesDate, 0, 10),
             'joinStatusOptions' => self::getJoinStatusOptions($obj->joinStatus),
             'bigo' => strip_tags($obj->bigo),
+            'guinLists' => self::guinLists(),
             'gujinLists' => self::gujinLists($idx),
         ]);
 
         return parent::getPanel('', $content, 'guin');
     }
 
+    public static function guinLists()
+    {
+        $guin_obj = EntityGuin::getGuin('','','');
+
+        $array = array();
+        $i = 0;
+
+        while ($emp = $guin_obj->fetchObject(EntityGuin::class)) {
+            $array[$i]['idx'] = $emp->idx;
+            $array[$i]['registerNumber'] = $emp->registerNumber;
+            $array[$i]['guinName'] = $emp->guinName;
+
+            $i++;
+        }
+
+        $rows = "";
+        foreach ($array as $k => $v) {
+            $rows .= View::render('pages/saramListOptions', [
+                'idx' => $v['idx'],
+                'text' => $v['registerNumber']." | ".$v['guinName'],
+            ]);
+        }
+
+        return $rows;
+    }
     public static function gujinLists($idx)
     {
         if (!empty($idx)) {
