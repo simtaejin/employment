@@ -109,6 +109,39 @@
                                 </div>
                             </div>
 
+                            <div class="row g-3 mt-4">
+                                <div class="col-md">
+                                    <div class="form-label">가입일</div>
+                                    <input type="text" class="form-control" placeholder="가입일" name="joinDate" id="joinDate" value="{{joinDate}}">
+                                </div>
+                                <div class="col-md">
+                                    <div class="form-label">회비납일</div>
+                                    <input type="text" class="form-control" placeholder="회비납일" name="duesDate" id="duesDate" value="{{duesDate}}">
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mt-4">
+                                <div class="col-md">
+                                    <div class="form-label">회원상태</div>
+                                    <select class="form-control" placeholder="회원상태" name="joinStatus" id="joinStatus" >
+                                        {{joinStatusOptions}}
+                                    </select>
+                                </div>
+                                <div class="col-md">
+
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mt-4">
+                                <div class="col-md">
+                                    <div class="form-label">비고</div>
+                                    <textarea class="form-control" placeholder="비고" name="bigo" id="bigo">{{bigo}}</textarea>
+                                </div>
+                                <div class="col-md">
+
+                                </div>
+                            </div>
+
                         </div>
                         <div class="card-footer bg-transparent mt-auto">
                             <div class="btn-list justify-content-end">
@@ -149,6 +182,7 @@
     </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
 <script>
     $(function () {
         $("[name='search_button']").click(function(){
@@ -190,7 +224,20 @@
 
             $("[name='frm_guin']").attr("action","/page/guin");
             $("[name='frm_guin']").submit();
+        });
 
+        $("#joinDate, #duesDate").datepicker({
+            dateFormat: 'yy-mm-dd' //Input Display Format 변경
+            ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+            ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
+            // ,changeYear: true //콤보박스에서 년 선택 가능
+            // ,changeMonth: true //콤보박스에서 월 선택 가능
+            // ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
+            ,buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
+            ,monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'] //달력의 월 부분 텍스트
+            ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip 텍스트
+            ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 부분 텍스트
+            ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 부분 Tooltip 텍스트
         });
     });
 </script>

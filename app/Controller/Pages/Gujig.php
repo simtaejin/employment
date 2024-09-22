@@ -25,16 +25,35 @@ class Gujig extends Page {
             'extraAddress' => '',
             'phoneNumber_1' => '',
             'phoneNumber_2' => '',
+            'joinDate' => '',
+            'duesDate' => '',
+            'joinStatusOptions' => self::getJoinStatusOptions(),
+            'bigo' => '',
             'guinLists' => '',
         ]);
 
         return parent::getPanel('', $content, 'gujig');
     }
 
+    public static function getJoinStatusOptions($value = 0)
+    {
+        $array = ['0'=>'중지','1'=>'가입중'];
+
+        $rows = "";
+        foreach ($array as $k => $v) {
+            $rows .= View::render('pages/joinStatusOptions', [
+               'value' => $k,
+               'text' => $v,
+               'selected' => ($k == $value) ? 'selected' : '',
+            ]);
+        }
+
+        return $rows;
+    }
+
     public static function postGujig($request) {
         $postVars = $request->getPostVars();
         $obMember = Common::get_manager();
-
 
         $obj = new EntityGujig();
         $obj->idx = isset($postVars['idx']) ? $postVars['idx'] : '';
@@ -49,6 +68,10 @@ class Gujig extends Page {
         $obj->extraAddress = $postVars['extraAddress'];
         $obj->phoneNumber_1 = $postVars['phoneNumber_1'];
         $obj->phoneNumber_2 = $postVars['phoneNumber_2'];
+        $obj->joinDate = $postVars['joinDate'];
+        $obj->duesDate = $postVars['duesDate'];
+        $obj->joinStatus = $postVars['joinStatus'];
+        $obj->bigo = $postVars['bigo'];
 
         if (!empty($postVars['idx'])) {
             $_idx = $obj->updated();
@@ -74,6 +97,10 @@ class Gujig extends Page {
             'extraAddress' => $obj->extraAddress,
             'phoneNumber_1' => $obj->phoneNumber_1,
             'phoneNumber_2' => $obj->phoneNumber_2,
+            'joinDate' => substr($obj->joinDate, 0, 10),
+            'duesDate' => substr($obj->duesDate, 0, 10),
+            'joinStatusOptions' => self::getJoinStatusOptions($obj->joinStatus),
+            'bigo' => strip_tags($obj->bigo),
             'guinLists' => self::guinLists($idx),
         ]);
 
@@ -89,10 +116,10 @@ class Gujig extends Page {
             $i = 0;
 
             while ($emp = $emp_obj->fetchObject(EntityEmployment::class)) {
-                $guin_info = EntityGujig::getGujig('idx='.$idx,'','')->fetchObject(EntityGujig::class);
+                $guin_info = EntityGuin::getGuin('idx='.$emp->idx,'','')->fetchObject(EntityGuin::class);
 
                 $array[$i]['registerNumber'] = $guin_info->registerNumber;
-                $array[$i]['gujigName'] = $guin_info->gujigName;
+                $array[$i]['guinName'] = $guin_info->guinName;
                 $array[$i]['roadAddress'] = $guin_info->roadAddress;
                 $array[$i]['detailAddress'] = $guin_info->detailAddress;
                 $array[$i]['phoneNumber_1'] = $guin_info->phoneNumber_1;
@@ -108,7 +135,7 @@ class Gujig extends Page {
                 $rows .= View::render('pages/guinList', [
                     'idx' => $k+1,
                     'registerNumber' => $v['registerNumber'],
-                    'gujigName' => $v['gujigName'],
+                    'guinName' => $v['guinName'],
                     'address' => $v['roadAddress']." ".$v['detailAddress'],
                     'phone'=>$v['phoneNumber_1']." / ".$v['phoneNumber_2'],
                     'applicationDate' => $v['applicationDate'],

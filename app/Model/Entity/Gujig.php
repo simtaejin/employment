@@ -30,6 +30,14 @@ class Gujig
 
     public $phoneNumber_2;
 
+    public $joinDate;
+
+    public $duesDate;
+
+    public $joinStatus;
+
+    public $bigo;
+
     public $created_at;
 
 
@@ -59,6 +67,10 @@ class Gujig
             'extraAddress' => $this->extraAddress,
             'phoneNumber_1' => $this->phoneNumber_1,
             'phoneNumber_2' => $this->phoneNumber_2,
+            'joinDate' => $this->joinDate,
+            'duesDate' => $this->duesDate,
+            'joinStatus' => $this->joinStatus,
+            'bigo' => $this->bigo,
             'created_at' => $this->created_at,
         ]);
 
@@ -79,6 +91,10 @@ class Gujig
             'extraAddress' => $this->extraAddress,
             'phoneNumber_1' => $this->phoneNumber_1,
             'phoneNumber_2' => $this->phoneNumber_2,
+            'joinDate' => $this->joinDate,
+            'duesDate' => $this->duesDate,
+            'joinStatus' => $this->joinStatus,
+            'bigo' => $this->bigo,
         ]);
     }
 }
