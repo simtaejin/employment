@@ -110,11 +110,13 @@ class Gujig extends Page {
         $i = 0;
 
         while ($emp = $gujig_obj->fetchObject(EntityGujig::class)) {
-            $array[$i]['idx'] = $emp->idx;
-            $array[$i]['registerNumber'] = $emp->registerNumber;
-            $array[$i]['gujigName'] = $emp->gujigName;
+            if ($emp) {
+                $array[$i]['idx'] = $emp->idx;
+                $array[$i]['registerNumber'] = $emp->registerNumber;
+                $array[$i]['gujigName'] = $emp->gujigName;
 
-            $i++;
+                $i++;
+            }
         }
 
         $rows = "";
@@ -166,7 +168,7 @@ class Gujig extends Page {
 
             while ($emp = $emp_obj->fetchObject(EntityEmployment::class)) {
 
-                $guin_info = EntityGuin::getGuin('idx='.$emp->idx,'','')->fetchObject(EntityGuin::class);
+                $guin_info = EntityGuin::getGuin('idx='.$emp->guinIdx,'','')->fetchObject(EntityGuin::class);
 
                 if ($guin_info) {
                     $array[$i]['registerNumber'] = $guin_info->registerNumber;

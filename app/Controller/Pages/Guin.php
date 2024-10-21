@@ -148,7 +148,6 @@ class Guin extends Page
 
                 $i++;
             }
-
         }
 
         $rows = "";
@@ -169,18 +168,21 @@ class Guin extends Page
             $array = array();
             $i = 0;
             while ($emp = $emp_obj->fetchObject(EntityEmployment::class)) {
-                $gujig_info = EntityGujig::getGujig("idx=".$emp->idx,"","","*")->fetchObject(EntityGujig::class);
 
-                $array[$i]['registerNumber'] = $gujig_info->registerNumber;
-                $array[$i]['gujigName'] = $gujig_info->gujigName;
-                $array[$i]['jumin'] = $gujig_info->jumin;
-                $array[$i]['jumin'] = $gujig_info->jumin;
-                $array[$i]['phoneNumber_1'] = $gujig_info->phoneNumber_1;
-                $array[$i]['phoneNumber_2'] = $gujig_info->phoneNumber_2;
-                $array[$i]['applicationTime'] = $emp->applicationTime;
-                $array[$i]['applicationDate'] = $emp->applicationDate;
+                $gujig_info = EntityGujig::getGujig("idx=".$emp->gujigIdx,"","","*")->fetchObject(EntityGujig::class);
 
-                $i++;
+                if ($gujig_info) {
+                    $array[$i]['registerNumber'] = $gujig_info->registerNumber;
+                    $array[$i]['gujigName'] = $gujig_info->gujigName;
+                    $array[$i]['jumin'] = $gujig_info->jumin;
+                    $array[$i]['jumin'] = $gujig_info->jumin;
+                    $array[$i]['phoneNumber_1'] = $gujig_info->phoneNumber_1;
+                    $array[$i]['phoneNumber_2'] = $gujig_info->phoneNumber_2;
+                    $array[$i]['applicationTime'] = $emp->applicationTime;
+                    $array[$i]['applicationDate'] = $emp->applicationDate;
+
+                    $i++;
+                }
             }
 
             $rows = "";

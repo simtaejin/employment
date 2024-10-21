@@ -18,7 +18,7 @@
                 <form name="frm_employment" action="/page/employment" method="post">
                     <div class="col d-flex flex-column">
                         <div class="card-header">
-                            시간대 빼기
+
                         </div>
                         <div class="card-body">
                             <div class="card-body">
@@ -28,16 +28,16 @@
                                         <input class="form-control mb-2" name="applicationDate" id="datepicker" placeholder="날짜" value="">
                                     </div>
                                 </div>
-                                <div class="mb-3 row text-center">
-                                    <label class="col-3 col-form-label">시간대</label>
-                                    <div class="col">
-                                        <select class="form-control" name="applicationTime" >
-                                            <option value="종일">종일</option>
-                                            <option value="오전">오전</option>
-                                            <option value="오후">오후</option>
-                                        </select>
-                                    </div>
-                                </div>
+<!--                                <div class="mb-3 row text-center">-->
+<!--                                    <label class="col-3 col-form-label">시간대</label>-->
+<!--                                    <div class="col">-->
+<!--                                        <select class="form-control" name="applicationTime" >-->
+<!--                                            <option value="종일">종일</option>-->
+<!--                                            <option value="오전">오전</option>-->
+<!--                                            <option value="오후">오후</option>-->
+<!--                                        </select>-->
+<!--                                    </div>-->
+<!--                                </div>-->
                                 <div class="mb-3 row text-center">
                                     <label class="col-3 col-form-label">구인자</label>
                                     <div class="col">
@@ -105,7 +105,7 @@
                             $.map($.parseJSON(data), function (item) {
                                 return {
                                     label: item.guinName,
-                                    value: item.guinName,
+                                    value: item.registerNumber,
                                     idx: item.idx,
                                 }
                             })
@@ -147,7 +147,7 @@
                             $.map($.parseJSON(data), function (item) {
                                 return {
                                     label: item.gujigName,
-                                    value: item.gujigName,
+                                    value: item.registerNumber,
                                     idx: item.idx,
                                 }
                             })

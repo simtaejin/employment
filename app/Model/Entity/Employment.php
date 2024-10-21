@@ -44,7 +44,7 @@ class Employment
             'guinIdx' => $this->guinIdx,
             'gujigIdx' => $this->gujigIdx,
             'applicationDate' => $this->applicationDate,
-            'applicationTime' => $this->applicationTime,
+//            'applicationTime' => $this->applicationTime,
             'created_at' => $this->created_at,
         ]);
 
