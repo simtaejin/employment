@@ -25,8 +25,10 @@ class Gujig extends Page {
             'extraAddress' => '',
             'phoneNumber_1' => '',
             'phoneNumber_2' => '',
+            'joinItemsOptions' => self::getJoinItemsOptions(),
             'joinDate' => '',
             'duesDate' => '',
+            'duesPrice' => '',
             'joinStatusOptions' => self::getJoinStatusOptions(),
             'bigo' => '',
             'gujigLists' => self::guGujigLists(),
@@ -34,6 +36,21 @@ class Gujig extends Page {
         ]);
 
         return parent::getPanel('', $content, 'gujig');
+    }
+
+    public static function getJoinItemsOptions($value = 0) {
+        $array = ['0'=>'가사일','1'=>'식당일', '2'=>'건설인력'];
+
+        $rows = "";
+        foreach ($array as $k => $v) {
+            $rows .= View::render('pages/joinItemsOptions', [
+               'value' => $k,
+               'text' => $v,
+               'selected' => ($k == $value) ? 'selected' : '',
+            ]);
+        }
+
+        return $rows;
     }
 
     public static function getJoinStatusOptions($value = 0)
@@ -69,8 +86,10 @@ class Gujig extends Page {
         $obj->extraAddress = $postVars['extraAddress'];
         $obj->phoneNumber_1 = $postVars['phoneNumber_1'];
         $obj->phoneNumber_2 = $postVars['phoneNumber_2'];
+        $obj->items = $postVars['items'];
         $obj->joinDate = $postVars['joinDate'];
         $obj->duesDate = $postVars['duesDate'];
+        $obj->duesPrice = $postVars['duesPrice'];
         $obj->joinStatus = $postVars['joinStatus'];
         $obj->bigo = $postVars['bigo'];
 
@@ -102,7 +121,7 @@ class Gujig extends Page {
         foreach ($array as $k => $v) {
             $rows .= View::render('pages/saramListOptions', [
                 'idx' => $v['idx'],
-                'text' => $v['registerNumber']." | ".$v['gujigName'],
+                'text' => $v['registerNumber'],
             ]);
         }
 
@@ -124,8 +143,10 @@ class Gujig extends Page {
             'extraAddress' => $obj->extraAddress,
             'phoneNumber_1' => $obj->phoneNumber_1,
             'phoneNumber_2' => $obj->phoneNumber_2,
+            'joinItemsOptions' => self::getJoinItemsOptions($obj->items),
             'joinDate' => substr($obj->joinDate, 0, 10),
             'duesDate' => substr($obj->duesDate, 0, 10),
+            'duesPrice' => $obj->duesPrice,
             'joinStatusOptions' => self::getJoinStatusOptions($obj->joinStatus),
             'bigo' => strip_tags($obj->bigo),
             'gujigLists' => self::guGujigLists(),
@@ -144,18 +165,22 @@ class Gujig extends Page {
             $i = 0;
 
             while ($emp = $emp_obj->fetchObject(EntityEmployment::class)) {
+
                 $guin_info = EntityGuin::getGuin('idx='.$emp->idx,'','')->fetchObject(EntityGuin::class);
 
-                $array[$i]['registerNumber'] = $guin_info->registerNumber;
-                $array[$i]['guinName'] = $guin_info->guinName;
-                $array[$i]['roadAddress'] = $guin_info->roadAddress;
-                $array[$i]['detailAddress'] = $guin_info->detailAddress;
-                $array[$i]['phoneNumber_1'] = $guin_info->phoneNumber_1;
-                $array[$i]['phoneNumber_2'] = $guin_info->phoneNumber_2;
-                $array[$i]['applicationTime'] = $emp->applicationTime;
-                $array[$i]['applicationDate'] = $emp->applicationDate;
+                if ($guin_info) {
+                    $array[$i]['registerNumber'] = $guin_info->registerNumber;
+                    $array[$i]['guinName'] = $guin_info->guinName;
+                    $array[$i]['roadAddress'] = $guin_info->roadAddress;
+                    $array[$i]['detailAddress'] = $guin_info->detailAddress;
+                    $array[$i]['phoneNumber_1'] = $guin_info->phoneNumber_1;
+                    $array[$i]['phoneNumber_2'] = $guin_info->phoneNumber_2;
+                    $array[$i]['applicationTime'] = $emp->applicationTime;
+                    $array[$i]['applicationDate'] = $emp->applicationDate;
 
-                $i++;
+                    $i++;
+                }
+
             }
 
             $rows = "";

@@ -29,9 +29,13 @@ class Guin
 
     public $phoneNumber_2;
 
+    public $items;
+
     public $joinDate;
 
     public $duesDate;
+
+    public $duesPrice;
 
     public $joinStatus;
 
@@ -42,7 +46,7 @@ class Guin
 
     public static function getGuinSearch($idx, $name)
     {
-        return (new Database('guin'))->execute("select * from guin where memberIdx='{$idx}' and guinName like '%{$name}%' ");
+        return (new Database('guin'))->execute("select * from guin where memberIdx='{$idx}' and registerNumber like '%{$name}%' ");
     }
 
     public static function getGuin($where = null, $order = null, $limit = null, $fields = '*')
@@ -65,8 +69,10 @@ class Guin
             'extraAddress' => $this->extraAddress,
             'phoneNumber_1' => $this->phoneNumber_1,
             'phoneNumber_2' => $this->phoneNumber_2,
+            'items' => $this->items,
             'joinDate' => $this->joinDate,
             'duesDate' => $this->duesDate,
+            'duesPrice' => $this->duesPrice,
             'joinStatus' => $this->joinStatus,
             'bigo' => $this->bigo,
             'created_at' => $this->created_at,
@@ -88,8 +94,10 @@ class Guin
             'extraAddress' => $this->extraAddress,
             'phoneNumber_1' => $this->phoneNumber_1,
             'phoneNumber_2' => $this->phoneNumber_2,
+            'items' => $this->items,
             'joinDate' => $this->joinDate,
             'duesDate' => $this->duesDate,
+            'duesPrice' => $this->duesPrice,
             'joinStatus' => $this->joinStatus,
             'bigo' => $this->bigo,
         ]);

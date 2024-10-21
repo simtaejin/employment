@@ -26,8 +26,10 @@ class Guin extends Page
             'extraAddress' => '',
             'phoneNumber_1' => '',
             'phoneNumber_2' => '',
+            'joinItemsOptions' => self::getJoinItemsOptions(),
             'joinDate' => '',
             'duesDate' => '',
+            'duesPrice' => '',
             'joinStatusOptions' => self::getJoinStatusOptions(),
             'bigo' => '',
             'guinLists' => self::guinLists(),
@@ -36,6 +38,23 @@ class Guin extends Page
 
         return parent::getPanel('', $content, 'guin');
     }
+
+    public static function getJoinItemsOptions($value = 0) {
+        $array = ['0'=>'가사일','1'=>'식당일', '2'=>'건설인력'];
+
+        $rows = "";
+        foreach ($array as $k => $v) {
+            $rows .= View::render('pages/joinItemsOptions', [
+               'value' => $k,
+               'text' => $v,
+               'selected' => ($k == $value) ? 'selected' : '',
+            ]);
+        }
+
+        return $rows;
+    }
+
+
 
     public static function getJoinStatusOptions($value = 0)
     {
@@ -70,8 +89,10 @@ class Guin extends Page
         $obj->extraAddress = $postVars['extraAddress'];
         $obj->phoneNumber_1 = $postVars['phoneNumber_1'];
         $obj->phoneNumber_2 = $postVars['phoneNumber_2'];
+        $obj->items = $postVars['items'];
         $obj->joinDate = $postVars['joinDate'];
         $obj->duesDate = $postVars['duesDate'];
+        $obj->duesPrice = $postVars['duesPrice'];
         $obj->joinStatus = $postVars['joinStatus'];
         $obj->bigo = $postVars['bigo'];
 
@@ -99,8 +120,10 @@ class Guin extends Page
             'extraAddress' => $obj->extraAddress,
             'phoneNumber_1' => $obj->phoneNumber_1,
             'phoneNumber_2' => $obj->phoneNumber_2,
+            'joinItemsOptions' => self::getJoinItemsOptions($obj->items),
             'joinDate' => substr($obj->joinDate, 0, 10),
             'duesDate' => substr($obj->duesDate, 0, 10),
+            'duesPrice' => $obj->duesPrice,
             'joinStatusOptions' => self::getJoinStatusOptions($obj->joinStatus),
             'bigo' => strip_tags($obj->bigo),
             'guinLists' => self::guinLists(),
@@ -118,11 +141,14 @@ class Guin extends Page
         $i = 0;
 
         while ($emp = $guin_obj->fetchObject(EntityGuin::class)) {
-            $array[$i]['idx'] = $emp->idx;
-            $array[$i]['registerNumber'] = $emp->registerNumber;
-            $array[$i]['guinName'] = $emp->guinName;
+            if ($emp) {
+                $array[$i]['idx'] = $emp->idx;
+                $array[$i]['registerNumber'] = $emp->registerNumber;
+                $array[$i]['guinName'] = $emp->guinName;
 
-            $i++;
+                $i++;
+            }
+
         }
 
         $rows = "";

@@ -47,7 +47,7 @@
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <select name="search_list" class="form-control" style="height: 400px;" multiple>
+                            <select  id="search_list" name="search_list" class="form-control" style="height: 400px;" multiple>
                                 {{guinLists}}
                             </select>
                         </div>
@@ -58,6 +58,9 @@
                         <input type="hidden" name="idx" id="idx" value="{{idx}}">
                         <div class="card-header">
                             <h3 class="card-title">구인자 정보</h3>
+                            </br>항목 추가 (가사일, 식당일, 건설인력)
+                            </br>회비 1년에 한번
+                            </br>회비 금액
                         </div>
                         <div class="card-body">
                             <div class="row g-3">
@@ -65,7 +68,7 @@
                                     <div class="form-label">접수번호</div>
                                     <input type="text" class="form-control" name="registerNumber" placeholder="접수번호" value="{{registerNumber}}">
                                 </div>
-                                <div class="col-md">
+                                <div class="col-md" style="display: none">
                                     <div class="form-label">이름</div>
                                     <input type="text" class="form-control" placeholder="이름" name="guinName" value="{{guinName}}">
                                 </div>
@@ -92,7 +95,7 @@
                                     <div class="col-md">
                                         <input type="text" class="form-control" placeholder="상세주소" name="detailAddress" id="detailAddress" value="{{detailAddress}}">
                                     </div>
-                                    <div class="col-md">
+                                    <div class="col-md" style="display: none">
                                         <input type="text" class="form-control" placeholder="참고항목" name="extraAddress" id="extraAddress" value="{{extraAddress}}">
                                     </div>
                                 </div>
@@ -111,12 +114,25 @@
 
                             <div class="row g-3 mt-4">
                                 <div class="col-md">
+                                    <div class="form-label">항목</div>
+                                    <select class="form-select" placeholder="항목" name="items" id="items" >
+                                        {{joinItemsOptions}}
+                                    </select>
+                                </div>
+                                <div class="col-md">
                                     <div class="form-label">가입일</div>
                                     <input type="text" class="form-control" placeholder="가입일" name="joinDate" id="joinDate" value="{{joinDate}}">
                                 </div>
+                            </div>
+
+                            <div class="row g-3 mt-4">
                                 <div class="col-md">
                                     <div class="form-label">회비납일</div>
                                     <input type="text" class="form-control" placeholder="회비납일" name="duesDate" id="duesDate" value="{{duesDate}}">
+                                </div>
+                                <div class="col-md">
+                                    <div class="form-label">회비금액</div>
+                                    <input type="text" class="form-control" placeholder="회비금액" name="duesPrice" id="duesPrice" value="{{duesPrice}}">
                                 </div>
                             </div>
 
@@ -212,14 +228,14 @@
 
         $("[name='frm_guin_btn']").click(function(){
             if ($("[name='registerNumber']").val() == "") {alert('접수번호를 입력 하세요.');return false;}
-            if ($("[name='guinName']").val() == "") {alert('이름을 입력 하세요.');return false;}
+            // if ($("[name='guinName']").val() == "") {alert('이름을 입력 하세요.');return false;}
             if ($("[name='postcode']").val() == "") {alert('우편번호를 입력 하세요.');return false;}
             if ($("[name='roadAddress']").val() == "") {alert('도로명을 입력 하세요.');return false;}
             if ($("[name='jibunAddress']").val() == "") {alert('지번을 입력 하세요.');return false;}
             if ($("[name='detailAddress']").val() == "") {alert('상세주로를 입력 하세요.');return false;}
-            if ($("[name='extraAddress']").val() == "") {alert('참고항목을 입력 하세요.');return false;}
+            // if ($("[name='extraAddress']").val() == "") {alert('참고항목을 입력 하세요.');return false;}
             if ($("[name='phoneNumber_1']").val() == "") {alert('전화번호를 입력 하세요.');return false;}
-            if ($("[name='phoneNumber_2']").val() == "") {alert('전화번호를 입력 하세요.');return false;}
+            // if ($("[name='phoneNumber_2']").val() == "") {alert('전화번호를 입력 하세요.');return false;}
 
 
             $("[name='frm_guin']").attr("action","/page/guin");
