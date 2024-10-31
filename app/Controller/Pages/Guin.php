@@ -186,7 +186,7 @@ class Guin extends Page
         foreach ($array as $k => $v) {
             $rows .= View::render('pages/saramListOptions', [
                 'idx' => $v['idx'],
-                'text' => $v['registerNumber']." | ".$v['guinName'],
+                'text' => $v['registerNumber'],
             ]);
         }
 
@@ -291,7 +291,7 @@ class Guin extends Page
         foreach ($arr as $k => $v) {
             $rows .= View::render('pages/saramListOptions', [
                 'idx' => $v['idx'],
-                'text' => $v['registerNumber']." | ".$v['guinName'],
+                'text' => $v['registerNumber'],
             ]);
         }
 

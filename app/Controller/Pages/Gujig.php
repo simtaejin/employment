@@ -292,7 +292,7 @@ class Gujig extends Page {
         foreach ($arr as $k => $v) {
             $rows .= View::render('pages/saramListOptions', [
                 'idx' => $v['idx'],
-                'text' => $v['registerNumber']." | ".$v['gujigName'],
+                'text' => $v['registerNumber'],
             ]);
         }
 
