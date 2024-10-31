@@ -4,6 +4,9 @@ namespace App\Utils;
 
 use App\Model\Entity\Member as EntityMmeber;
 use Exception;
+use \App\Model\Entity\Guindues as EntityGuindues;
+use \App\Model\Entity\Gujigdues as EntityGujigdues;
+
 
 class Common{
 
@@ -129,51 +132,19 @@ class Common{
         exit;
     }
 
-    public static function getBoardTypeNameSelect($board_type, $field) {
-        $array = array();
+    public static function getGuinDues($guin_idx=0) {
+        if ($guin_idx==0) return null;
 
-        foreach (\App\Controller\Admin\BoardTypeRef::getBoardTypeNameArray($board_type) as $k => $v) {
-            if ($v['field'] == $field) {
-                $array = $v;
-            }
-        }
-
-        return $array;
+        $dues_obj = EntityGuindues::getLastDues($guin_idx);
+        $dues = $dues_obj->fetchObject();
+        return $dues;
     }
 
-    public static function getBoardTypeSymbol() {
-        $symbols_array = array();
+    public static function getGujigDues($gujig_idx=0) {
+        if ($gujig_idx==0) return null;
 
-        $symbols_result = EntityBoardTypeSymbol::getBoardTypeSymbol('','','','*');
-        while ($obj_symbols = $symbols_result->fetchObject(EntityBoardTypeSymbol::class)) {
-            $symbols_array[] = (array) $obj_symbols;
-        }
-
-        return $symbols_array;
+        $dues_obj = EntityGujigdues::getLastDues($gujig_idx);
+        $dues = $dues_obj->fetchObject();
+        return $dues;
     }
-
-    public static function findSymbol($board_type_name) {
-        $symbols_array = self::getBoardTypeSymbol();
-
-
-
-        $array = array_filter(  $symbols_array, function($v, $k) use ($board_type_name) {
-            return preg_match('/'.$v['name'].'/i', $board_type_name);
-        },ARRAY_FILTER_USE_BOTH );
-
-
-        if (count($array) > 0) {
-            return array_values($array)[0];
-        }
-    }
-
-    public static function temperature_commend($address, $board_type, $board_number, $temperature) {
-        $_txt = $address.$board_type.$board_number;
-        $commend = 'mosquitto_pub -h 13.209.31.152 -t LORA/GATE/CONTROL/'.$_txt.' -u ewave -P andante -m "{\"temp\":'.$temperature.'}"';
-
-        $output=null;
-        $retval=null;
-        exec($commend, $output, $retval);
-    }
-
 }

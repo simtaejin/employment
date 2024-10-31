@@ -44,6 +44,11 @@ class Guin
     public $created_at;
 
 
+    public static function getGuinLastDuesList($year_age)
+    {
+        return (new Database('guin'))->execute("select * from guin where date_format(duesdate, '%Y-%m') <= '{$year_age}' ");
+    }
+
     public static function getGuinSearch($idx, $name)
     {
         return (new Database('guin'))->execute("select * from guin where memberIdx='{$idx}' and registerNumber like '%{$name}%' ");

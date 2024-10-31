@@ -8,6 +8,8 @@ use \App\Utils\View;
 use \App\Model\Entity\Guin as EntityGuin;
 use \App\Model\Entity\Gujig as EntityGujig;
 use App\Model\Entity\Employment as EntityEmployment;
+use \App\Model\Entity\Gujigdues as EntityGujigdues;
+use WilliamCosta\DatabaseManager\Database;
 
 class Gujig extends Page {
 
@@ -94,10 +96,42 @@ class Gujig extends Page {
         $obj->bigo = $postVars['bigo'];
 
         if (!empty($postVars['idx'])) {
-            $_idx = $obj->updated();
+            $obj->updated();
+            $_idx = $postVars['idx'];
+
+            $dues_obj = Common::getGujigDues($_idx);
+            if (empty($dues_obj)) {
+                if ($postVars['duesDate'] && $postVars['duesPrice']) {
+                    $deus = new EntityGujigdues();
+                    $deus->memberIdx = $obMember['idx'];
+                    $deus->gujigIdx = $_idx;
+                    $deus->duesDate = $postVars['duesDate'];
+                    $deus->duesPrice = $postVars['duesPrice'];
+                    $deus->created();
+                }
+            } else {
+                if ($postVars['duesDate'] && $postVars['duesPrice']) {
+                    $dues = new EntityGujigdues();
+                    $dues->idx = $dues_obj->idx;
+                    $dues->memberIdx = $obMember['idx'];
+                    $dues->gujigIdx = $_idx;
+                    $dues->duesDate = $postVars['duesDate'];
+                    $dues->duesPrice = $postVars['duesPrice'];
+                    $dues->updated();
+                }
+            }
+
             Common::error_loc_msg('/page/gujig/'.$postVars['idx'], '수정 되었습니다.');
         } else {
             $_idx = $obj->created();
+
+            $deus = new EntityGujigdues();
+            $deus->memberIdx = $obMember['idx'];
+            $deus->gujigIdx = $_idx;
+            $deus->duesDate = $postVars['duesDate'];
+            $deus->duesPrice = $postVars['duesPrice'];
+            $deus->created();
+
             Common::error_loc_msg('/page/gujig', '저장 되었습니다.');
         }
     }
@@ -147,8 +181,8 @@ class Gujig extends Page {
             'phoneNumber_2' => $obj->phoneNumber_2,
             'joinItemsOptions' => self::getJoinItemsOptions($obj->items),
             'joinDate' => substr($obj->joinDate, 0, 10),
-            'duesDate' => substr($obj->duesDate, 0, 10),
-            'duesPrice' => $obj->duesPrice,
+            'duesDate' => substr(Common::getGujigDues($obj->idx)->duesDate, 0, 10) ?? '',
+            'duesPrice' => Common::getGujigDues($obj->idx)->duesPrice ?? '',
             'joinStatusOptions' => self::getJoinStatusOptions($obj->joinStatus),
             'bigo' => strip_tags($obj->bigo),
             'gujigLists' => self::guGujigLists(),
@@ -207,6 +241,134 @@ class Gujig extends Page {
         $obMember = Common::get_manager();
 
         $results = EntityGujig::getGujigSearch($obMember['idx'], $postVars['search_name']);
+
+        $arr = array();
+        $i = 0;
+        while ($obj = $results->fetchObject(EntityGujig::class)) {
+            $arr[$i]['idx'] = $obj->idx;
+            $arr[$i]['registerNumber'] = $obj->registerNumber;
+            $arr[$i]['gujigName'] = $obj->gujigName;
+            $i++;
+        }
+
+        return [
+            'success' => true,
+            'data' => $arr,
+        ];
+
+    }
+
+    public static function getGujigDues($request) {
+        $content = View::render('pages/gujig_dues', [
+            'idx'   => '',
+            'registerNumber' => '',
+            'duesDate' => '',
+            'duesPrice' => '',
+            'gujigLists' => self::getGujigDuesLists(),
+            'gujigDuesLists' => '',
+        ]);
+
+        return parent::getPanel('', $content, 'gujig');
+    }
+
+    public static function getGujigDuesLists() {
+        $now = date("Y-m-d");
+        $year_ago = date('Y-m',strtotime($now."first day of 1 months ago"));
+//        $last_day = date("t",strtotime($year_ago));
+
+        $results = EntityGujig::getGujigLastDuesList($year_ago);
+        $arr = array();
+        $i = 0;
+
+        while ($obj = $results->fetchObject(EntityGujig::class)) {
+            $arr[$i]['idx'] = $obj->idx;
+            $arr[$i]['registerNumber'] = $obj->registerNumber;
+            $arr[$i]['gujigName'] = $obj->gujigName;
+
+            $i++;
+        }
+
+        $rows = "";
+        foreach ($arr as $k => $v) {
+            $rows .= View::render('pages/saramListOptions', [
+                'idx' => $v['idx'],
+                'text' => $v['registerNumber']." | ".$v['gujigName'],
+            ]);
+        }
+
+        return $rows;
+    }
+
+    public static function getViewGujigDues($idx) {
+        $obj = EntityGujig::getGujig('idx='.$idx,'','')->fetchObject(EntityGujig::class);
+
+        $content = View::render('pages/gujig_dues', [
+            'idx' => $obj->idx,
+            'registerNumber' => $obj->registerNumber,
+            'duesDate' => Common::getGujigDues($obj->idx)->duesDate ?? '',
+            'duesPrice' => Common::getGujigDues($obj->idx)->duesPrice ?? '',
+            'gujigLists' => self::getGujigDuesLists(),
+            'gujigDuesLists' => self::gujigDuesLists($obj->idx),
+        ]);
+
+        return parent::getPanel('', $content, 'gujig');
+    }
+
+    public static function postGujigDues($request) {
+        $postVars = $request->getPostVars();
+
+        $obMember = Common::get_manager();
+
+        $duesDate = $postVars['duesDate']." 00:00:00";
+        $duesPrice = $postVars['duesPrice'];
+
+        $result = (new Database('gujig'))->execute("update `gujig` set `duesDate`='{$duesDate}',`duesPrice`={$duesPrice} where `idx`= ".$postVars['idx']);
+        $deus = new EntityGujigdues();
+        $deus->memberIdx = $obMember['idx'];
+        $deus->gujigIdx = $postVars['idx'];
+        $deus->duesDate = $duesDate;
+        $deus->duesPrice = $duesPrice;
+        $deus->created();
+
+        Common::error_loc_msg('/page/gujig_dues/'.$postVars['idx'], '수정 되었습니다.');
+    }
+
+    public static function gujigDuesLists($gujig_idx) {
+        if (!empty($gujig_idx)) {
+            $emp_obj = EntityGujigdues::getGujigdues("gujigIdx=".$gujig_idx,'','','*');
+
+            $array = array();
+            $i = 0;
+
+            while ($emp = $emp_obj->fetchObject(EntityGujigdues::class)) {
+                $array[$i]['duesDate'] = $emp->duesDate;
+                $array[$i]['duesPrice'] = $emp->duesPrice;
+                $array[$i]['created_at'] = $emp->created_at;
+
+                $i++;
+            }
+
+            $rows = "";
+            foreach ($array as $k => $v) {
+                $rows .= View::render('pages/gujigDuesList', [
+                    'idx' => $k+1,
+                    'duesDate' => $v['duesDate'],
+                    'duesPrice' => $v['duesPrice'],
+                    'created_at' => $v['created_at'],
+                ]);
+            }
+        }
+
+        return $rows;
+    }
+
+    public static function getGujigDuesSearch($request) {
+        $postVars = $request->getPostVars();
+        $obMember = Common::get_manager();
+
+        $year_ago = date('Y-m',strtotime($postVars['searchDate']."-01"."first day of 1 months ago"));
+
+        $results = EntityGujig::getGujigLastDuesList($year_ago);
 
         $arr = array();
         $i = 0;

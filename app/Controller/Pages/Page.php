@@ -19,12 +19,21 @@ class Page {
         [
             'label' => 'guin',
             'title' => '구인관리',
-            'link'  => URL."/page/guin"
+//            'link'  => URL."/page/guin",
+            'submenu'=>[
+                ['label' => 'table_inquiry', 'title' => '구인관리', 'link' => URL."/page/guin"],
+                ['label' => 'chart_inquiry', 'title' => '구인회비관리', 'link' => URL."/page/guin_dues"],
+            ],
+
         ],
         [
             'label' => 'gujig',
             'title' => '구직관리',
-            'link'  => URL."/page/gujig"
+//            'link'  => URL."/page/gujig"
+            'submenu'=>[
+                ['label' => 'table_inquiry', 'title' => '구직관리', 'link' => URL."/page/gujig"],
+                ['label' => 'chart_inquiry', 'title' => '구직회비관리', 'link' => URL."/page/gujig_dues"],
+            ],
         ],
         [
             'label' => 'employment',

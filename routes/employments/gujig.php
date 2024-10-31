@@ -39,3 +39,40 @@ $obRouter->post('/page/gujig_search',[
         return new Response(200, Pages\Gujig::getGujigSearch($request), 'application/json');
     }
 ]);
+
+$obRouter->get('/page/gujig_dues', [
+    'middlewares' => [
+        'required-login'
+    ],
+    function ($request) {
+        return new Response(200, Pages\Gujig::getGujigDues($request));
+    }
+]);
+
+$obRouter->get('/page/gujig_dues/{idx}', [
+    'middlewares' => [
+        'required-login'
+    ],
+    function ($request, $idx) {
+        return new Response(200, Pages\Gujig::getViewGujigDues($idx));
+    }
+]);
+
+$obRouter->post('/page/gujig_dues', [
+    'middlewares' => [
+        'required-login'
+    ],
+    function ($request) {
+        return new Response(200, Pages\Gujig::postGujigDues($request));
+    }
+]);
+
+$obRouter->post('/page/gujig_dues_search',[
+    'middlewares' => [
+        'api',
+        'required-login'
+    ],
+    function($request) {
+        return new Response(200, Pages\Gujig::getGujigDuesSearch($request), 'application/json');
+    }
+]);

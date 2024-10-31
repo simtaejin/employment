@@ -43,6 +43,10 @@ class Gujig
 
     public $created_at;
 
+    public static function getGujigLastDuesList($year_age)
+    {
+        return (new Database('gujig'))->execute("select * from gujig where date_format(duesdate, '%Y-%m') <= '{$year_age}' ");
+    }
 
     public static function getGujigSearch($idx, $name)
     {
