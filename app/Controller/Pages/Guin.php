@@ -297,7 +297,7 @@ class Guin extends Page
 
         return $rows;
     }
-
+2,985,284
     public static function getViewGujinDues($idx) {
         $obj = EntityGuin::getGuin('idx='.$idx,'','')->fetchObject(EntityGuin::class);
 
