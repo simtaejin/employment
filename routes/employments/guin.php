@@ -41,6 +41,24 @@ $obRouter->post('/page/guin_search',[
     }
 ]);
 
+$obRouter->post('/page/guin_download',[
+    'middlewares' => [
+        'required-login'
+    ],
+    function($request) {
+        return new Response(200, Pages\Guin::getGuinDownload($request));
+    }
+]);
+
+$obRouter->post('/page/guin_dues_download',[
+    'middlewares' => [
+        'required-login'
+    ],
+    function($request) {
+        return new Response(200, Pages\Guin::getGuinDuesDownload($request));
+    }
+]);
+
 $obRouter->get('/page/guin_dues', [
     'middlewares' => [
         'required-login'

@@ -40,6 +40,24 @@ $obRouter->post('/page/gujig_search',[
     }
 ]);
 
+$obRouter->post('/page/gujig_download',[
+    'middlewares' => [
+        'required-login'
+    ],
+    function($request) {
+        return new Response(200, Pages\Gujig::getGujigDownload($request));
+    }
+]);
+
+$obRouter->post('/page/gujig_dues_download',[
+    'middlewares' => [
+        'required-login'
+    ],
+    function($request) {
+        return new Response(200, Pages\Gujig::getGujigDuesDownload($request));
+    }
+]);
+
 $obRouter->get('/page/gujig_dues', [
     'middlewares' => [
         'required-login'

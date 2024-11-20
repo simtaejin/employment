@@ -11,6 +11,9 @@ use \App\Model\Entity\Employment as EntityEmployment;
 use \App\Model\Entity\Guindues as EntityGuindues;
 use WilliamCosta\DatabaseManager\Database;
 
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
 class Guin extends Page
 {
 
@@ -253,6 +256,142 @@ class Guin extends Page
             'success' => true,
             'data' => $arr,
         ];
+    }
+
+    public static function getGuinDownload($request) {
+        $postVars = $request->getPostVars();
+        $obMember = Common::get_manager();
+
+        $results = EntityGuin::getGuinSearch($obMember['idx'], $postVars['search_name']);
+
+        $arr = array();
+        $i = 0;
+        while ($obj = $results->fetchObject(EntityGuin::class)) {
+            $arr[$i]['idx'] = $obj->idx;
+            $arr[$i]['registerNumber'] = $obj->registerNumber;
+            $arr[$i]['guinName'] = $obj->guinName;
+            $arr[$i]['postcode'] = $obj->postcode;
+            $arr[$i]['roadAddress'] = $obj->roadAddress;
+            $arr[$i]['jibunAddress'] = $obj->jibunAddress;
+            $arr[$i]['detailAddress'] = $obj->detailAddress;
+            $arr[$i]['extraAddress'] = $obj->extraAddress;
+            $arr[$i]['phoneNumber_1'] = $obj->phoneNumber_1;
+            $arr[$i]['phoneNumber_2'] = $obj->phoneNumber_2;
+            $arr[$i]['items'] = $obj->items;
+            $arr[$i]['joinDate'] = $obj->joinDate;
+            $arr[$i]['duesDate'] = $obj->duesDate;
+            $arr[$i]['duesPrice'] = $obj->duesPrice;
+            $arr[$i]['joinStatus'] = $obj->joinStatus;
+            $arr[$i]['bigo'] = $obj->bigo;
+            $i++;
+        }
+
+        $spreadsheet = new Spreadsheet();
+        $spreadsheet->setActiveSheetIndex(0);
+
+        $out_put_file_full_name = "구인 정보";
+
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue("A1", "번호");
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue("B1", "접수번호");
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue("C1", "주소");
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue("D1", "전화번호1");
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue("E1", "전화번호2");
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue("F1", "항목");
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue("G1", "가입일");
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue("H1", "회비납일");
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue("I1", "회비금액");
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue("J1", "회원상태");
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue("K1", "비고");
+
+        foreach ($arr as $k => $v) {
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue("A".$k+2, $k+1);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue("B".$k+2, $v['registerNumber']);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue("C".$k+2, $v['postcode']." ".$v['roadAddress']." ".$v['jibunAddress']." ".$v['detailAddress']);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue("D".$k+2, $v['phoneNumber_1']);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue("E".$k+2, $v['phoneNumber_2']);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue("F".$k+2, $v['items']);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue("G".$k+2, $v['joinDate']);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue("H".$k+2, $v['duesDate']);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue("I".$k+2, $v['duesPrice']);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue("J".$k+2, $v['joinStatus']);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue("K".$k+2, $v['bigo']);
+        }
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="' . $out_put_file_full_name . '.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output');
+    }
+
+    public static function getGuinDuesDownload($request) {
+        $postVars = $request->getPostVars();
+        $obMember = Common::get_manager();
+
+        $year_ago = date('Y-m',strtotime($postVars['searchDate']."-01"."-1 year"));
+
+        $results = EntityGuin::getGuinLastDuesList($year_ago);
+
+        $arr = array();
+        $i = 0;
+        while ($obj = $results->fetchObject(EntityGuin::class)) {
+            $arr[$i]['idx'] = $obj->idx;
+            $arr[$i]['registerNumber'] = $obj->registerNumber;
+            $arr[$i]['guinName'] = $obj->guinName;
+            $arr[$i]['postcode'] = $obj->postcode;
+            $arr[$i]['roadAddress'] = $obj->roadAddress;
+            $arr[$i]['jibunAddress'] = $obj->jibunAddress;
+            $arr[$i]['detailAddress'] = $obj->detailAddress;
+            $arr[$i]['extraAddress'] = $obj->extraAddress;
+            $arr[$i]['phoneNumber_1'] = $obj->phoneNumber_1;
+            $arr[$i]['phoneNumber_2'] = $obj->phoneNumber_2;
+            $arr[$i]['items'] = $obj->items;
+            $arr[$i]['joinDate'] = $obj->joinDate;
+            $arr[$i]['duesDate'] = $obj->duesDate;
+            $arr[$i]['duesPrice'] = $obj->duesPrice;
+            $arr[$i]['joinStatus'] = $obj->joinStatus;
+            $arr[$i]['bigo'] = $obj->bigo;
+            $i++;
+        }
+
+        $spreadsheet = new Spreadsheet();
+        $spreadsheet->setActiveSheetIndex(0);
+
+        $out_put_file_full_name = "구인 회비 정보";
+
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue("A1", "번호");
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue("B1", "접수번호");
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue("C1", "주소");
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue("D1", "전화번호1");
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue("E1", "전화번호2");
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue("F1", "항목");
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue("G1", "가입일");
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue("H1", "회비납일");
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue("I1", "회비금액");
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue("J1", "회원상태");
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue("K1", "비고");
+
+        foreach ($arr as $k => $v) {
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue("A".$k+2, $k+1);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue("B".$k+2, $v['registerNumber']);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue("C".$k+2, $v['postcode']." ".$v['roadAddress']." ".$v['jibunAddress']." ".$v['detailAddress']);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue("D".$k+2, $v['phoneNumber_1']);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue("E".$k+2, $v['phoneNumber_2']);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue("F".$k+2, $v['items']);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue("G".$k+2, $v['joinDate']);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue("H".$k+2, $v['duesDate']);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue("I".$k+2, $v['duesPrice']);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue("J".$k+2, $v['joinStatus']);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue("K".$k+2, $v['bigo']);
+        }
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="' . $out_put_file_full_name . '.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output');
     }
 
     public static function getGuinDues($request) {

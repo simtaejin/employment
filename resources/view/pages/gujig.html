@@ -15,7 +15,7 @@
     <div class="container-xl">
         <div class="card">
             <div class="row g-0">
-                <div class="col-lg-3  d-md-block border-end">
+                <div class="col-lg-4  d-md-block border-end">
                     <div class="card-header">
                         <h3 class="card-title">구직 검색</h3>
                     </div>
@@ -37,8 +37,13 @@
                                             </div>
                                             <button type="button" name="search_button" class="btn btn-primary">
                                                 <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-zoom"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
                                                 검색
+                                            </button>&nbsp;
+                                            <button type="button" name="download_button" class="btn btn-primary">
+                                                <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file-type-xls"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4" /><path d="M4 15l4 6" /><path d="M4 21l4 -6" /><path d="M17 20.25c0 .414 .336 .75 .75 .75h1.25a1 1 0 0 0 1 -1v-1a1 1 0 0 0 -1 -1h-1a1 1 0 0 1 -1 -1v-1a1 1 0 0 1 1 -1h1.25a.75 .75 0 0 1 .75 .75" /><path d="M11 15v6h3" /></svg>
+                                                다운로드
                                             </button>
                                         </div>
                                     </div>
@@ -52,7 +57,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-9 d-flex flex-column">
+                <div class="col-lg-8 d-flex flex-column">
                     <form name="frm_gujig" id="frm_gujig" action="" method="post">
                         <input type="hidden" name="idx" id="idx" value="{{idx}}">
                         <div class="card-header">
@@ -224,6 +229,12 @@
                 }
             })
         });
+
+        $("[name='download_button']").click(function(){
+            $("[name='frm_search']").attr("action","/page/gujig_download");
+            $("[name='frm_search']").attr("method","post");
+            $("[name='frm_search']").submit();
+        })
 
         $("[name='search_list']").dblclick(function() {
             location.href='/page/gujig/'+$(this).val();
