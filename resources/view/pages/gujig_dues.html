@@ -1,0 +1,221 @@
+<!-- Page header -->
+<div class="page-header d-print-none">
+    <div class="container-xl">
+        <div class="row g-2 align-items-center">
+            <div class="col">
+                <h2 class="page-title">
+                    구직 회비
+
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page body -->
+<div class="page-body">
+    <div class="container-xl">
+        <div class="card">
+            <div class="row g-0">
+                <div class="col-lg-4  d-md-block border-end">
+                    <div class="card-header">
+                        <h3 class="card-title">회비 검색</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-2 row">
+                            <label class="col-2 col-form-label">날짜</label>
+                            <div class="col-md-9">
+                                <form name="frm_search">
+                                    <div class="col-auto ms-auto ">
+                                        <div class="d-flex">
+                                            <div class="me-3">
+                                                <div class="input-icon">
+                                                    <input type="text"  name="searchDate" id="searchDate" value="" class="form-control" placeholder="날짜">
+                                                    <span class="input-icon-addon">
+                                                    <!-- Download SVG icon from http://tabler-icons.io/i/search -->
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <button type="button" name="search_button" class="btn btn-primary">
+                                                <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-zoom"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
+                                                검색
+                                            </button>&nbsp;
+                                            <button type="button" name="download_button" class="btn btn-primary">
+                                                <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file-type-xls"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4" /><path d="M4 15l4 6" /><path d="M4 21l4 -6" /><path d="M17 20.25c0 .414 .336 .75 .75 .75h1.25a1 1 0 0 0 1 -1v-1a1 1 0 0 0 -1 -1h-1a1 1 0 0 1 -1 -1v-1a1 1 0 0 1 1 -1h1.25a.75 .75 0 0 1 .75 .75" /><path d="M11 15v6h3" /></svg>
+                                                다운로드
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <select  id="search_list" name="search_list" class="form-control" style="height: 400px;" multiple>
+                                {{gujigLists}}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 d-flex flex-column">
+                    <form name="frm_gujig" id="frm_gujig" action="" method="post">
+                        <input type="hidden" name="idx" id="idx" value="{{idx}}">
+                        <div class="card-header">
+                            <h3 class="card-title">구직자 회비 입력</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-md">
+                                    <div class="form-label">접수번호</div>
+                                    <input type="text" class="form-control" name="registerNumber" placeholder="접수번호" value="{{registerNumber}}" readonly>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mt-4">
+                                <div class="col-md">
+                                    <div class="form-label">회비납일</div>
+                                    <input type="text" class="form-control" placeholder="회비납일" name="duesDate" id="duesDate" value="{{duesDate}}">
+                                </div>
+                                <div class="col-md">
+                                    <div class="form-label">회비금액</div>
+                                    <input type="text" class="form-control" placeholder="회비금액" name="duesPrice" id="duesPrice" value="{{duesPrice}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent mt-auto">
+                            <div class="btn-list justify-content-end">
+                                <a href="/page/gujig_dues" class="btn">
+                                    입력 초기화
+                                </a>
+                                <button type="button" name="frm_gujig_btn" id="frm_gujig_btn" class="btn btn-primary">저장</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-table table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>순서</th>
+                                <th>회비납입일</th>
+                                <th>회비금액</th>
+                                <th>저장날짜</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {{gujigDuesLists}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<style>
+    table.ui-datepicker-calendar { display:none; }
+    .calendar-off table.ui-datepicker-calendar {
+        display:block !important;
+    }
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+<script>
+    $(function () {
+        $("[name='search_button']").click(function(){
+            if ($("[name='search_name']").val() == "") {alert('검색어를 입력 하세요.');return false;}
+
+            $.ajax({
+                url:'/page/gujig_dues_search',
+                type:'post',
+                data:$("[name='frm_search']").serialize(),
+                dataType: "json",
+                success:function(obj){
+                    $("[name='search_list']").empty();
+                    if (obj.success) {
+                        $.each(obj.data, function (key, value) {
+                            $("[name='search_list']").append(
+                                $("<option></option>").attr("value",obj.data[key]['idx']).text(obj.data[key]['registerNumber'] +' | '+ obj.data[key]['gujigName'])
+                            )
+                        })
+                    }
+                }
+            })
+        });
+
+        $("[name='download_button']").click(function(){
+            $("[name='frm_search']").attr("action","/page/gujig_dues_download");
+            $("[name='frm_search']").attr("method","post");
+            $("[name='frm_search']").submit();
+        })
+
+        $("[name='search_list']").dblclick(function() {
+            location.href='/page/gujig_dues/'+$(this).val();
+        });
+
+        $("[name='frm_gujig_btn']").click(function(){
+            if ($("[name='registerNumber']").val() == "") {alert('접수번호를 입력 하세요.');return false;}
+
+            if ($("[name='duesDate']").val() == "") {alert('회비납일을 입력 하세요.');return false;}
+            if ($("[name='duesPrice']").val() == "") {alert('회비금액을 입력 하세요.');return false;}
+
+
+            $("[name='frm_gujig']").attr("action","/page/gujig_dues");
+            $("[name='frm_gujig']").submit();
+        });
+
+        $("#searchDate").datepicker({
+            dateFormat: 'yy-mm' //Input Display Format 변경
+            ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+            ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
+            ,changeYear: true //콤보박스에서 년 선택 가능
+            ,changeMonth: true //콤보박스에서 월 선택 가능
+            // ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
+            ,buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
+            ,monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'] //달력의 월 부분 텍스트
+            ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip 텍스트
+            ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 부분 텍스트
+            ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 부분 Tooltip 텍스트
+            ,showButtonPanel: true,
+            closeText: '선택',
+            onClose: function(dateText, inst) {
+                var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+                var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                $(this).datepicker('setDate', new Date(year, month, 1));
+              },
+            beforeShow: function(input, inst) {
+                $(inst.dpDiv).removeClass('calendar-off');
+            }
+        });
+        //초기값을 오늘 날짜로 설정
+
+        $('#searchDate').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
+
+        $("#duesDate").datepicker({
+            dateFormat: 'yy-mm-dd' //Input Display Format 변경
+            ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+            ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
+            // ,changeYear: true //콤보박스에서 년 선택 가능
+            // ,changeMonth: true //콤보박스에서 월 선택 가능
+            // ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
+            ,buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
+            ,monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'] //달력의 월 부분 텍스트
+            ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip 텍스트
+            ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 부분 텍스트
+            ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 부분 Tooltip 텍스트
+            ,beforeShow: function(input, inst) {
+                $(inst.dpDiv).addClass('calendar-off');
+            }
+        });
+
+    });
+</script>
