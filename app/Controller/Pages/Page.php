@@ -40,6 +40,12 @@ class Page {
             'title' => '취업관리',
             'link'  => URL."/page/employment"
         ],
+        [
+            'label' => 'agreement',
+            'title' => '소개요금약정서관리',
+            'link'  => URL."/page/agreement"
+        ],
+
     ];
 
 
