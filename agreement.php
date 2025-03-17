@@ -81,16 +81,16 @@ require __DIR__.'/includes/app.php';
 
     <table>
         <tr>
-            <th rowspan="4">구인자</th>
+            <th rowspan="4" style="width: 100px;">구인자</th>
         </tr>
         <tr>
-            <th>사업체 명칭</th>
+            <th style="width:200px;">사업체 명칭</th>
             <td colspan="4"></td>
         </tr>
         <tr>
             <th>소재지</th>
             <td></td>
-            <th>전화번호</th>
+            <th style="width:200px;">전화번호</th>
             <td></td>
         </tr>
 
@@ -105,12 +105,12 @@ require __DIR__.'/includes/app.php';
 
     <table>
         <tr>
-            <th rowspan="4">구직자</th>
+            <th rowspan="4" style="width: 100px;">구직자</th>
         </tr>
         <tr>
-            <th>성명</th>
+            <th style="width:200px;">성명</th>
             <td></td>
-            <th>생년월일</th>
+            <th style="width:200px;">생년월일</th>
             <td></td>
         </tr>
         <tr>
@@ -125,16 +125,16 @@ require __DIR__.'/includes/app.php';
 
     <table>
         <tr>
-            <th rowspan="14">계약내용</th>
+            <th rowspan="14" style="width: 100px;">계약내용</th>
         </tr>
         <tr>
-            <th>임금</th>
+            <th style="width:200px;">임금</th>
             <td colspan="4">총액</td>
         </tr>
         <tr>
             <th>임금 지급 형태</th>
-            <td>시급 / 일급 / 주급 / 월급 / 기타</td>
-            <th>취업 장소</th>
+            <td style="width:300px;">시급 / 일급 / 주급 / 월급 / 기타</td>
+            <th style="width:200px;">취업 장소</th>
             <td></td>
         </tr>
         <tr>
@@ -155,10 +155,10 @@ require __DIR__.'/includes/app.php';
 
     <table>
         <tr>
-            <th rowspan="14">소개요금</th>
+            <th rowspan="14" style="width: 100px;">소개요금</th>
         </tr>
         <tr>
-            <th>요율제</th>
+            <th style="width:200px;">요율제</th>
             <td colspan="3" style="padding:0px;margin:0px">
                 <table style="width:100%;margin:0px;padding:0px;">
                     <tr>
@@ -174,9 +174,9 @@ require __DIR__.'/includes/app.php';
         </tr>
         <tr>
             <th rowspan="2">회원제인 경우</th>
-            <th>회원기간</th>
-            <th>구인자 월회비(원)</th>
-            <th>구직자 월회비(원)</th>
+            <th style="width:265px;">회원기간</th>
+            <th style="width:265px;">구인자 월회비(원)</th>
+            <th style="width:265px;">구직자 월회비(원)</th>
         </tr>
         <tr>
             <td>~</td>

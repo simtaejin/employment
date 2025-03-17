@@ -14,6 +14,8 @@ class Guin
     public $registerNumber;
 
     public $guinName;
+    public $business;
+    public $industry;
 
     public $postcode;
 
@@ -67,6 +69,8 @@ class Guin
             'memberIdx' => $this->memberIdx,
             'registerNumber' => $this->registerNumber,
             'guinName' => $this->guinName,
+            'business' => $this->business,
+            'industry' => $this->industry,
             'postcode' => $this->postcode,
             'roadAddress' => $this->roadAddress,
             'jibunAddress' => $this->jibunAddress,
@@ -92,6 +96,8 @@ class Guin
             'memberIdx' => $this->memberIdx,
             'registerNumber' => $this->registerNumber,
             'guinName' => $this->guinName,
+            'business' => $this->business,
+            'industry' => $this->industry,
             'postcode' => $this->postcode,
             'roadAddress' => $this->roadAddress,
             'jibunAddress' => $this->jibunAddress,

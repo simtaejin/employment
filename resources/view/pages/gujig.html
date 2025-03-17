@@ -69,13 +69,20 @@
                                     <div class="form-label">접수번호</div>
                                     <input type="text" class="form-control" name="registerNumber" placeholder="접수번호" value="{{registerNumber}}">
                                 </div>
-                                <div class="col-md" style="display: none">
+                                <div class="col-md">
+                                    <div class="form-label">주민번호</div>
+                                    <input type="text" class="form-control" placeholder="주민번호" name="jumin" value="{{jumin}}">
+                                </div>
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col-md">
                                     <div class="form-label">이름</div>
                                     <input type="text" class="form-control" placeholder="이름" name="gujigName" value="{{gujigName}}">
                                 </div>
                                 <div class="col-md">
-                                    <div class="form-label">주민번호</div>
-                                    <input type="text" class="form-control" placeholder="주민번호" name="jumin" value="{{jumin}}">
+                                    <div class="form-label">생년월일</div>
+                                    <input type="text" class="form-control" placeholder="생년월일" name="birthdate" value="{{birthdate}}">
                                 </div>
                             </div>
 
@@ -237,12 +244,15 @@
         })
 
         $("[name='search_list']").dblclick(function() {
-            location.href='/page/gujig/'+$(this).val();
+            if ($(this).val() != "") {
+                location.href='/page/gujig/'+$(this).val();
+            }
         });
 
         $("[name='frm_gujig_btn']").click(function(){
             if ($("[name='registerNumber']").val() == "") {alert('접수번호를 입력 하세요.');return false;}
-            // if ($("[name='gujigName']").val() == "") {alert('이름을 입력 하세요.');return false;}
+            if ($("[name='gujigName']").val() == "") {alert('이름을 입력 하세요.');return false;}
+            if ($("[name='birthdate']").val() == "") {alert('생년월일을 입력 하세요.');return false;}
             if ($("[name='jumin']").val() == "") {alert('주민번호을 입력 하세요.');return false;}
             if ($("[name='postcode']").val() == "") {alert('우편번호를 입력 하세요.');return false;}
             if ($("[name='roadAddress']").val() == "") {alert('도로명을 입력 하세요.');return false;}

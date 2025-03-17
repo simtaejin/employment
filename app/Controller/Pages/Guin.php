@@ -24,6 +24,8 @@ class Guin extends Page
             'idx' => '',
             'registerNumber' => '',
             'guinName' => '',
+            'business' => '',
+            'industry' => '',
             'postcode' => '',
             'roadAddress' => '',
             'jibunAddress' => '',
@@ -85,6 +87,8 @@ class Guin extends Page
         $obj->memberIdx = $obMember['idx'];
         $obj->registerNumber = $postVars['registerNumber'];
         $obj->guinName = $postVars['guinName'];
+        $obj->business = $postVars['business'];
+        $obj->industry = $postVars['industry'];
         $obj->postcode = $postVars['postcode'];
         $obj->roadAddress = $postVars['roadAddress'];
         $obj->jibunAddress = $postVars['jibunAddress'];
@@ -148,6 +152,8 @@ class Guin extends Page
             'idx' => $obj->idx,
             'registerNumber' => $obj->registerNumber,
             'guinName' => $obj->guinName,
+            'business' => $obj->business,
+            'industry' => $obj->industry,
             'postcode' => $obj->postcode,
             'roadAddress' => $obj->roadAddress,
             'jibunAddress' => $obj->jibunAddress,

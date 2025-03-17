@@ -70,9 +70,19 @@
                                     <div class="form-label">접수번호</div>
                                     <input type="text" class="form-control" name="registerNumber" placeholder="접수번호" value="{{registerNumber}}">
                                 </div>
-                                <div class="col-md" style="display: none">
-                                    <div class="form-label">이름</div>
+                                <div class="col-md">
+                                    <div class="form-label">대표자</div>
                                     <input type="text" class="form-control" placeholder="이름" name="guinName" value="{{guinName}}">
+                                </div>
+                            </div>
+                            <div class="row g-3 mt-4">
+                                <div class="col-md">
+                                    <div class="form-label">사업체명칭</div>
+                                    <input type="text" class="form-control" placeholder="사업체명칭" name="business" id="business" value="{{business}}">
+                                </div>
+                                <div class="col-md">
+                                    <div class="form-label">업종</div>
+                                    <input type="text" class="form-control" placeholder="업종" name="industry" id="industry" value="{{industry}}">
                                 </div>
                             </div>
                             <h3 class="card-title mt-4">주소</h3>
@@ -228,12 +238,16 @@
         })
 
         $("[name='search_list']").dblclick(function() {
-            location.href='/page/guin/'+$(this).val();
+            if ($(this).val() != "") {
+                location.href='/page/guin/'+$(this).val();
+            }
         });
 
         $("[name='frm_guin_btn']").click(function(){
             if ($("[name='registerNumber']").val() == "") {alert('접수번호를 입력 하세요.');return false;}
-            // if ($("[name='guinName']").val() == "") {alert('이름을 입력 하세요.');return false;}
+            if ($("[name='guinName']").val() == "") {alert('대표자를 입력 하세요.');return false;}
+            if ($("[name='business']").val() == "") {alert('사업체명칭을 입력 하세요.');return false;}
+            if ($("[name='industry']").val() == "") {alert('업종을 입력 하세요.');return false;}
             if ($("[name='postcode']").val() == "") {alert('우편번호를 입력 하세요.');return false;}
             if ($("[name='roadAddress']").val() == "") {alert('도로명을 입력 하세요.');return false;}
             if ($("[name='jibunAddress']").val() == "") {alert('지번을 입력 하세요.');return false;}

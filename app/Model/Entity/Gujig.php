@@ -13,6 +13,7 @@ class Gujig
     public $registerNumber;
 
     public $gujigName;
+    public $birthdate;
 
     public $jumin;
 
@@ -66,6 +67,7 @@ class Gujig
             'memberIdx' => $this->memberIdx,
             'registerNumber' => $this->registerNumber,
             'gujigName' => $this->gujigName,
+            'birthdate' => $this->birthdate,
             'jumin' => $this->jumin,
             'postcode' => $this->postcode,
             'roadAddress' => $this->roadAddress,
@@ -92,6 +94,7 @@ class Gujig
             'memberIdx' => $this->memberIdx,
             'registerNumber' => $this->registerNumber,
             'gujigName' => $this->gujigName,
+            'birthdate' => $this->birthdate,
             'jumin' => $this->jumin,
             'postcode' => $this->postcode,
             'roadAddress' => $this->roadAddress,

@@ -21,6 +21,7 @@ class Gujig extends Page {
             'idx' => '',
             'registerNumber' => '',
             'gujigName' => '',
+            'birthdate' => '',
             'jumin' => '',
             'postcode' => '',
             'roadAddress' => '',
@@ -82,6 +83,7 @@ class Gujig extends Page {
         $obj->memberIdx = $obMember['idx'];
         $obj->registerNumber = $postVars['registerNumber'];
         $obj->gujigName = $postVars['gujigName'];
+        $obj->birthdate = $postVars['birthdate'];
         $obj->jumin = $postVars['jumin'];
         $obj->postcode = $postVars['postcode'];
         $obj->roadAddress = $postVars['roadAddress'];
@@ -173,6 +175,7 @@ class Gujig extends Page {
             'idx' => $obj->idx,
             'registerNumber' => $obj->registerNumber,
             'gujigName' => $obj->gujigName,
+            'birthdate' => $obj->birthdate,
             'jumin' => $obj->jumin,
             'postcode' => $obj->postcode,
             'roadAddress' => $obj->roadAddress,
