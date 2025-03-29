@@ -91,10 +91,39 @@ class Agreement extends Page
         $obj->guinDuesPrice = $postVars['guinDuesPrice'];
         $obj->gujigDuesPrice = $postVars['gujigDuesPrice'];
         $obj->introductionFee = $postVars['introductionFee'];
-        $obj->checkDate = '0000-00-00 00:00:00';
+        $obj->checkDate = $postVars['checkDate'].' 00:00:00';
         $obj->bigo = $postVars['bigo'];
         $_idx = $obj->created();
 
+    }
 
+    public static function getAgreementView($idx)
+    {
+
+        $agreement_obj = EntityAgreement::getAgreement("idx=".$idx, "", "", "*");
+        $obj = $agreement_obj->fetchObject(EntityAgreement::class);
+
+        foreach (get_object_vars($obj) as $property => $value) {
+            if ($property == 'business') {
+                $$property = $value;
+            } else if ($property == 'checkDate') {
+                $checkDateY = substr($value, 0, 4);
+                $checkDateM = substr($value, 5, 2);
+                $checkDateD = substr($value, 8, 2);
+            } else {
+                $$property = $value;
+            }
+        }
+        $array = array_merge(
+            get_object_vars($obj),
+            [
+                'checkDateY' => $checkDateY ?? null,
+                'checkDateM' => $checkDateM ?? null,
+                'checkDateD' => $checkDateD ?? null
+            ]
+        );
+
+        $content = View::render('pages/agreementView', $array);
+        return parent::getBlankPanel('', $content, 'agreement');
     }
 }

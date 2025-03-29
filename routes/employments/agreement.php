@@ -30,3 +30,12 @@ $obRouter->post('/page/agreementSave',[
         return new Response(200, Pages\Agreement::getAgreementSave($request));
     }
 ]);
+
+$obRouter->get('/page/agreementView/{idx}',[
+    'middlewares' => [
+        'required-login'
+    ],
+    function($request, $idx) {
+        return new Response(200, Pages\Agreement::getAgreementView($idx));
+    }
+]);

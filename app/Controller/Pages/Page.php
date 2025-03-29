@@ -15,6 +15,13 @@ class Page {
         ]);
     }
 
+    public static function getBlankPage($title, $content) {
+        return View::render('pages/blankpage', [
+            'title' => $title,
+            'content' => $content
+        ]);
+    }
+
     private static $menus = [
         [
             'label' => 'guin',
@@ -96,6 +103,14 @@ class Page {
         ]);
 
         return self::getPage($title, $contentPanel);
+    }
+
+    public static function getBlankPanel($title, $content, $currentModule) {
+        $contentPanel = View::render('pages/blankpanel', [
+            'content' => $content
+        ]);
+
+        return self::getBlankPage($title, $contentPanel);
     }
 
     public static function getPagination($request, $obPagination) {

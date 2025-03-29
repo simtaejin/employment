@@ -1,0 +1,196 @@
+<div class="container">
+    <h2>소개 요금 약정서</h2>
+
+    <table>
+        <tr>
+            <th rowspan="4" style="width: 100px;">구인자</th>
+        </tr>
+        <tr>
+            <th style="width:150px;">사업체 명칭</th>
+            <td colspan="4">{{business}}</td>
+        </tr>
+        <tr>
+            <th style="width:150px;">소재지</th>
+            <td style="width:180px;">{{guinJibunAddress}}</td>
+            <th style="width:150px;">전화번호</th>
+            <td style="width:180px;">{{guinPhoneNumber_1}}</td>
+        </tr>
+
+        <tr>
+            <th>대표자</th>
+            <td>{{guinName}}</td>
+            <th>업종</th>
+            <td>{{industry}}</td>
+        </tr>
+
+    </table>
+
+    <table>
+        <tr>
+            <th rowspan="4" style="width: 100px;">구직자</th>
+        </tr>
+        <tr>
+            <th style="width:150px;">성명</th>
+            <td style="width:180px;">{{gujigName}}</td>
+            <th style="width:150px;">생년월일</th>
+            <td style="width:180px;">{{birthdate}}</td>
+        </tr>
+        <tr>
+            <th>주소</th>
+            <td colspan="4">{{gujigJibunAddress}}</td>
+        </tr>
+        <tr>
+            <th>전화번호</th>
+            <td colspan="4">{{gujigPhoneNumber_1}}</td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <th rowspan="14" style="width: 100px;">계약내용</th>
+        </tr>
+        <tr>
+            <th style="width:150px;">임금</th>
+            <td colspan="4">총액  {{pay}}원 </td>
+        </tr>
+        <tr>
+            <th>임금 지급 형태</th>
+            <td style="width:180px;">{{wagePayment}}</td>
+            <th style="width:150px;">취업 장소</th>
+            <td style="width:180px;">{{place}}</td>
+        </tr>
+        <tr>
+            <th>소정 근로 시간</th>
+            <td>{{workingHours}}</td>
+            <th>종사자 업무</th>
+            <td>{{worker}}</td>
+        </tr>
+        <tr>
+            <th>근로 계약 기간</th>
+            <td colspan="4">{{contractPeriod}}</td>
+        </tr>
+        <tr>
+            <th>기타</th>
+            <td colspan="4">{{gita}}</td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <th rowspan="14" style="width: 100px;">소개요금</th>
+        </tr>
+        <tr>
+            <th style="width:150px;">요율제</th>
+            <td colspan="3" style="padding:0px;margin:0px">
+                <table style="width:100%;margin:0px;padding:0px;">
+                    <tr>
+                        <th>구인자 부담액</th>
+                        <th>구직자 부담액</th>
+                    </tr>
+                    <tr>
+                        <td>임금의 ({{guinBurdenPrice}})% <br> 금액 ({{guinBurdenPrice}}원)</td>
+                        <td>임금의 ({{gujigBurden}} )% <br> 금액 ({{guinBurdenPrice}}원)</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th rowspan="2">회원제인 경우</th>
+            <th style="width:170px;">회원기간</th>
+            <th style="width:170px;">구인자 월회비(원)</th>
+            <th style="width:170px;">구직자 월회비(원)</th>
+        </tr>
+        <tr>
+            <td>{{duesDate}}</td>
+            <td>{{guinDuesPrice}}</td>
+            <td>{{gujigDuesPrice}}</td>
+        </tr>
+        <tr>
+            <td colspan="4" style="padding:0px;margin:0px">
+                <table style="width:100%;margin:0px;padding:0px;">
+                    <tr>
+                        <th>소개요금 지급일자</th>
+                        <th>비 고 (기타 일정)</th>
+                    </tr>
+                    <tr>
+                        <td width="50%">
+                            당일일시불지급, 월별분할지급
+                            등 당사자 간정한 지급일자를 기입
+                            {{introductionFee}}
+                        </td>
+                        <td width="50%">
+                            소개 근로자의 중도퇴사, 일용근로자의 사용전환등
+                            다툼의 소지가 있는 사항을 명시적으로 기술
+                            {{bigo}}
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <table  class="small-height">
+        <tr>
+            <td colspan="4"><p>위와 같이 직업소개요금에 관하여 약정하였음을 확인합니다.</p></td>
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align: right"><p>{{checkDateY}}년  {{checkDateM}}월  {{checkDateD}}일</p></td>
+        </tr>
+        <tr>
+            <td class="blanktd"></td>
+            <td class="signature_label"><p>구직자</p></td>
+            <td class="signature_name"></td>
+            <td class="signature_in">(서명 또는 인)</td>
+        </tr>
+        <tr>
+            <td class="blanktd"></td>
+            <td class="signature_label"><p>구인자</p></td>
+            <td class="signature_name"></td>
+            <td class="signature_in">(서명 또는 인)</td>
+        </tr>
+        <tr>
+            <td class="blanktd"></td>
+            <td class="signature_label"><p>유료직업소개사업자</p></td>
+            <td class="signature_name"></td>
+            <td class="signature_in">(서명 또는 인)</td>
+        </tr>
+    </table>
+
+</div>
+
+<style>
+
+    .small-height {
+        height: 10px;
+        padding: 12px; /* 필요하면 패딩도 낮춤 */
+        border: 0px solid #FFFFFF;
+    }
+    .small-height td {
+        /*border: 0px solid #FFFFFF;*/
+        border: 1px solid red;
+    }
+    .small-height p {
+        margin: 0; /* 기본 여백 제거 */
+        line-height: 1; /* 줄 높이 조정 */
+    }
+    .blanktd {
+
+    }
+    .signature_label {
+        width: 180px;
+        text-align: left;
+        padding-right: 10px;
+        font-weight: bold;
+        font-size: 14px;
+    }
+    .signature_name {
+        width: 250px;
+        text-align: right;
+        padding-right: 10px;
+    }
+    .signature_in {
+        width: 100px;
+        text-align: right;
+    }
+
+</style>
