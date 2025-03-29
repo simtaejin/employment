@@ -140,13 +140,19 @@
             <td class="blanktd"></td>
             <td class="signature_label"><p>구직자</p></td>
             <td class="signature_name"></td>
-            <td class="signature_in">(서명 또는 인)</td>
+            <td class="signature_in" name="signature_gujig">
+                {{signature_gujig_img}}
+                (서명 또는 인)
+            </td>
         </tr>
         <tr>
             <td class="blanktd"></td>
             <td class="signature_label"><p>구인자</p></td>
             <td class="signature_name"></td>
-            <td class="signature_in">(서명 또는 인)</td>
+            <td class="signature_in" name="signature_guin">
+                {{signature_guin_img}}
+                (서명 또는 인)
+            </td>
         </tr>
         <tr>
             <td class="blanktd"></td>
@@ -166,8 +172,8 @@
         border: 0px solid #FFFFFF;
     }
     .small-height td {
-        /*border: 0px solid #FFFFFF;*/
-        border: 1px solid red;
+        border: 0px solid #FFFFFF;
+        /*border: 1px solid red;*/
     }
     .small-height p {
         margin: 0; /* 기본 여백 제거 */
@@ -191,6 +197,39 @@
     .signature_in {
         width: 100px;
         text-align: right;
+    }
+
+    /* 서명 관련 스타일 추가 */
+    td[name="signature_gujig"] {
+        position: relative;
+        padding-top: 60px; /* 이미지 높이에 따라 조정 */
+        text-align: center;
+    }
+
+    .signature_gujig_image {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        top: -00px; /* 이미지를 위로 이동 (음수 값으로 td 위에 배치) */
+        left: 50%;
+        transform: translateX(-50%); /* 가운데 정렬 */
+        z-index: 10; /* 다른 요소 위에 표시 */
+    }
+
+    td[name="signature_guin"] {
+        position: relative;
+        padding-top: 60px; /* 이미지 높이에 따라 조정 */
+        text-align: center;
+    }
+
+    .signature_guin_image {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        top: -00px; /* 이미지를 위로 이동 (음수 값으로 td 위에 배치) */
+        left: 50%;
+        transform: translateX(-50%); /* 가운데 정렬 */
+        z-index: 10; /* 다른 요소 위에 표시 */
     }
 
 </style>

@@ -87,4 +87,18 @@ class Agreement
     {
         return (new Database('agreement'))->select($where, $order, $limit, $fields);
     }
+
+    public static function setGuinImage($idx, $filePath)
+    {
+        return (new Database('agreement'))->execute(
+            "update agreement set `guinImage`= '".$filePath."' where `idx` = '".$idx."'"
+        );
+    }
+
+    public static function setGujigImage($idx, $filePath)
+    {
+        return (new Database('agreement'))->execute(
+            "update agreement set `gujigImage`= '".$filePath."' where `idx` = '".$idx."'"
+        );
+    }
 }

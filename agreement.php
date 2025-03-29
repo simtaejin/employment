@@ -1,12 +1,24 @@
 <?php
-
-date_default_timezone_set('Asia/Seoul');
-
 require __DIR__.'/includes/app.php';
 use \App\Utils\Common as Common;
 
 $idx= $_REQUEST['idx'];
+$mode = $_REQUEST['mode'];
 $result = Common::getAgreement($idx);
+//Common::print_r2($result);
+
+$signature = false;
+if ($mode == "guin") {
+    if ($result['guinImage']) {
+        $signature = true;
+    }
+} else if ($mode == "gujig") {
+    if ($result['gujigImage']) {
+        $signature = true;
+    }
+}
+
+
 ?>
 
 <!doctype html>
@@ -105,7 +117,7 @@ $result = Common::getAgreement($idx);
                 // 저장된 이미지 호출
 
                 if (localStorage['imgCanvas']) {
-                    loadImage();
+                    // loadImage();
                 } else {
                     ctx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
                 }
@@ -180,15 +192,59 @@ $result = Common::getAgreement($idx);
                 }
 
 
-                function saveImage() { // save to localStorage
+                function saveImage() {
+                    var idx = document.getElementById('idx');
+                    var mode = document.getElementById('mode');
                     var canvas = document.getElementById('drawCanvas');
-                    localStorage.setItem('imgCanvas', canvas.toDataURL('image/png'));
-                    var img = document.getElementById('saveImg');
-                    img.src = canvas.toDataURL('image/png');
-                    var tmp = $('<a>').attr('download', 'test.png').attr('href', img.src);
-                    tmp[0].click();
-                    tmp.remove();
+                    var imageData = canvas.toDataURL('image/png');
+
+                    // 서버에 이미지 데이터 전송
+                    $.ajax({
+                        type: "POST",
+                        url: "save_signature.php",  // 이미지를 처리할 PHP 파일
+                        data: {
+                            idx: idx.value,
+                            mode: mode.value,
+                            image_data: imageData,
+                            filename: "signature_" + Date.now() + ".png"  // 고유한 파일명 생성
+                        },
+                        success: function(response) {
+                            // 서버 응답이 이미 객체인지 문자열인지 확인
+                            var result;
+
+                            if (typeof response === 'object') {
+                                result = response; // 이미 객체면 그대로 사용
+                            } else {
+                                try {
+                                    result = JSON.parse(response); // 문자열이면 파싱 시도
+                                } catch(e) {
+                                    console.error("JSON 파싱 오류:", e);
+                                    alert("서버 응답을 처리하는 중 오류가 발생했습니다.");
+                                    return;
+                                }
+                            }
+
+                            if(result.success) {
+                                alert("서명이 성공적으로 저장되었습니다.");
+                                // 필요한 경우 저장된 이미지의 경로를 로컬 스토리지에도 저장
+                                // localStorage.setItem('imgCanvas', imageData);
+
+                                if(result.file_path) {
+                                    // localStorage.setItem('signatureFilePath', result.file_path);
+                                }
+                                location.reload()
+                            } else {
+                                alert("저장 중 오류가 발생했습니다: " + (result.message || "알 수 없는 오류"));
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            alert("서버 통신 오류: " + error);
+                            console.error("AJAX 오류:", xhr.responseText);
+                        }
+                    });
                 }
+
+
 
 
                 function clearCanvas() {
@@ -231,6 +287,8 @@ $result = Common::getAgreement($idx);
 <body>
 
 <div class="container">
+    <input type="hidden" name="idx" id="idx" value="<?php echo $idx;?>"/>
+    <input type="hidden" name="mode" id="mode" value="<?php echo $mode;?>"/>
     <h2>소개 요금 약정서</h2>
 
     <table>
@@ -372,13 +430,23 @@ $result = Common::getAgreement($idx);
             <td class="blanktd"></td>
             <td class="signature_label"><p>구직자</p></td>
             <td class="signature_name"></td>
-            <td class="signature_in">(서명 또는 인)</td>
+            <td class="signature_in" name="signature_gujig">
+                <?php if ($result['gujigImage']) { ?>
+                <img src="<?php echo $result['gujigImage'];?>" class="signature_gujig_image" alt="서명 이미지"/>
+                <?php } ?>
+                (서명 또는 인)
+            </td>
         </tr>
         <tr>
             <td class="blanktd"></td>
             <td class="signature_label"><p>구인자</p></td>
             <td class="signature_name"></td>
-            <td class="signature_in">(서명 또는 인)</td>
+            <td class="signature_in" name="signature_guin">
+                <?php if ($result['guinImage']) { ?>
+                <img src="<?php echo $result['guinImage'];?>" class="signature_guin_image" alt="서명 이미지"/>
+                <?php } ?>
+                (서명 또는 인)
+            </td>
         </tr>
         <tr>
             <td class="blanktd"></td>
@@ -390,9 +458,12 @@ $result = Common::getAgreement($idx);
 
 </div>
 
+<?php
+    if ($signature == false) {
+?>
 <div class="container" style="margin-top: 20px;margin-bottom: 20px;text-align: center">
-    <div align="center">
-        <canvas id="drawCanvas" width="320" height="320" style="border:1px solid #000000;">Canvas not supported</canvas>
+    <div align="center" class="canvas-container">
+        <canvas id="drawCanvas" style="border:1px solid #000000;max-width:100%;">Canvas not supported</canvas>
     </div>
     <div align="center" style="margin-top: 15px;">
         <button id="btnClea" class="signature-btn">다시 서명</button>
@@ -400,13 +471,27 @@ $result = Common::getAgreement($idx);
     </div>
 </div>
 <img id="saveImg" src="" style="display:none;"/>
-
-
+<?php
+    }
+?>
 
 <style>
+    .canvas-container {
+        width: 100%;
+        max-width: 320px;
+        margin: 0 auto;
+    }
+
+    #drawCanvas {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        touch-action: none;
+    }
+
     .signature-btn {
         padding: 10px 20px;
-        margin: 0 5px;
+        margin: 5px;
         border-radius: 5px;
         border: 1px solid #ddd;
         background-color: #f8f8f8;
@@ -432,14 +517,18 @@ $result = Common::getAgreement($idx);
         background-color: #375cd8;
     }
 
+
+
+
+
     .small-height {
         height: 10px;
         padding: 12px; /* 필요하면 패딩도 낮춤 */
         border: 0px solid #FFFFFF;
     }
     .small-height td {
-        /*border: 0px solid #FFFFFF;*/
-        border: 1px solid red;
+        border: 0px solid #FFFFFF;
+        /*border: 1px solid red;*/
     }
     .small-height p {
         margin: 0; /* 기본 여백 제거 */
@@ -463,6 +552,39 @@ $result = Common::getAgreement($idx);
     .signature_in {
         width: 100px;
         text-align: right;
+    }
+
+    /* 서명 관련 스타일 추가 */
+    td[name="signature_gujig"] {
+        position: relative;
+        padding-top: 60px; /* 이미지 높이에 따라 조정 */
+        text-align: center;
+    }
+
+    .signature_gujig_image {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        top: -00px; /* 이미지를 위로 이동 (음수 값으로 td 위에 배치) */
+        left: 50%;
+        transform: translateX(-50%); /* 가운데 정렬 */
+        z-index: 10; /* 다른 요소 위에 표시 */
+    }
+
+    td[name="signature_guin"] {
+        position: relative;
+        padding-top: 60px; /* 이미지 높이에 따라 조정 */
+        text-align: center;
+    }
+
+    .signature_guin_image {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        top: -00px; /* 이미지를 위로 이동 (음수 값으로 td 위에 배치) */
+        left: 50%;
+        transform: translateX(-50%); /* 가운데 정렬 */
+        z-index: 10; /* 다른 요소 위에 표시 */
     }
 
 </style>

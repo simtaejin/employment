@@ -162,6 +162,14 @@ class Common{
                 $checkDateY = substr($value, 0, 4);
                 $checkDateM = substr($value, 5, 2);
                 $checkDateD = substr($value, 8, 2);
+            } else if ($property == 'gujigImage') {
+                $_img_path= URL.'/'.$value;
+                $_img = "<img src='{$_img_path}' class=\"signature_gujig_image\" alt=\"서명 이미지\"/>";
+                $signature_gujig_img = $value ? $_img : "";
+            } else if ($property == 'guinImage') {
+                $_img_path= URL.'/'.$value;
+                $_img = "<img src='{$_img_path}' class=\"signature_guin_image\" alt=\"서명 이미지\"/>";
+                $signature_guin_img = $value ? $_img : "";
             } else {
                 $$property = $value;
             }
@@ -171,7 +179,9 @@ class Common{
             [
                 'checkDateY' => $checkDateY ?? null,
                 'checkDateM' => $checkDateM ?? null,
-                'checkDateD' => $checkDateD ?? null
+                'checkDateD' => $checkDateD ?? null,
+                'signature_gujig_img' => $signature_gujig_img ?? null,
+                'signature_guin_img' => $signature_guin_img ?? null,
             ]
         );
 

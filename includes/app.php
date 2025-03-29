@@ -1,4 +1,6 @@
 <?php
+date_default_timezone_set('Asia/Seoul');
+
 require __DIR__.'/../vendor/autoload.php';
 
 use \App\Utils\View;
