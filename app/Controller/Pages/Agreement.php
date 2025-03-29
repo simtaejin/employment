@@ -99,29 +99,7 @@ class Agreement extends Page
 
     public static function getAgreementView($idx)
     {
-
-        $agreement_obj = EntityAgreement::getAgreement("idx=".$idx, "", "", "*");
-        $obj = $agreement_obj->fetchObject(EntityAgreement::class);
-
-        foreach (get_object_vars($obj) as $property => $value) {
-            if ($property == 'business') {
-                $$property = $value;
-            } else if ($property == 'checkDate') {
-                $checkDateY = substr($value, 0, 4);
-                $checkDateM = substr($value, 5, 2);
-                $checkDateD = substr($value, 8, 2);
-            } else {
-                $$property = $value;
-            }
-        }
-        $array = array_merge(
-            get_object_vars($obj),
-            [
-                'checkDateY' => $checkDateY ?? null,
-                'checkDateM' => $checkDateM ?? null,
-                'checkDateD' => $checkDateD ?? null
-            ]
-        );
+        $array = Common::getAgreement($idx);
 
         $content = View::render('pages/agreementView', $array);
         return parent::getBlankPanel('', $content, 'agreement');

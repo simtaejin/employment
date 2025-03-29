@@ -2,6 +2,7 @@
 namespace App\Utils;
 
 
+use App\Model\Entity\Agreement as EntityAgreement;
 use App\Model\Entity\Member as EntityMmeber;
 use Exception;
 use \App\Model\Entity\Guindues as EntityGuindues;
@@ -147,4 +148,34 @@ class Common{
         $dues = $dues_obj->fetchObject();
         return $dues;
     }
+
+    public static function getAgreement($idx=0) {
+        if ($idx==0) return null;
+
+        $agreement_obj = EntityAgreement::getAgreement("idx=".$idx, "", "", "*");
+        $obj = $agreement_obj->fetchObject(EntityAgreement::class);
+
+        foreach (get_object_vars($obj) as $property => $value) {
+            if ($property == 'business') {
+                $$property = $value;
+            } else if ($property == 'checkDate') {
+                $checkDateY = substr($value, 0, 4);
+                $checkDateM = substr($value, 5, 2);
+                $checkDateD = substr($value, 8, 2);
+            } else {
+                $$property = $value;
+            }
+        }
+        $array = array_merge(
+            get_object_vars($obj),
+            [
+                'checkDateY' => $checkDateY ?? null,
+                'checkDateM' => $checkDateM ?? null,
+                'checkDateD' => $checkDateD ?? null
+            ]
+        );
+
+        return $array;
+    }
+
 }
