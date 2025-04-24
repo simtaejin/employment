@@ -65,8 +65,8 @@
                             <h3 class="card-title">구인자 정보</h3>
                         </div>
                         <div class="card-body">
-                            <div class="row g-3">
-                                <div class="col-md">
+                            <div class="row g-3" style="width: 500px">
+                                <div class="col-md" >
                                     <div class="form-label">접수번호</div>
                                     <input type="text" class="form-control" name="registerNumber" placeholder="접수번호" value="{{registerNumber}}">
                                 </div>
@@ -75,7 +75,19 @@
                                     <input type="text" class="form-control" placeholder="이름" name="guinName" value="{{guinName}}">
                                 </div>
                             </div>
-                            <div class="row g-3 mt-4">
+
+                            <div class="row g-3" style="width: 500px">
+                                <div class="col-md">
+                                    <div class="form-label">전화번호</div>
+                                    <input type="text" class="form-control" placeholder="전화번호" name="phoneNumber_1" id="phoneNumber_1" value="{{phoneNumber_1}}">
+                                </div>
+                                <div class="col-md">
+                                    <div class="form-label">전화번호</div>
+                                    <input type="text" class="form-control" placeholder="전화번호" name="phoneNumber_2" id="phoneNumber_2" value="{{phoneNumber_2}}">
+                                </div>
+                            </div>
+
+                            <div class="row g-3" style="width: 500px">
                                 <div class="col-md">
                                     <div class="form-label">사업체명칭</div>
                                     <input type="text" class="form-control" placeholder="사업체명칭" name="business" id="business" value="{{business}}">
@@ -85,8 +97,45 @@
                                     <input type="text" class="form-control" placeholder="업종" name="industry" id="industry" value="{{industry}}">
                                 </div>
                             </div>
+
+                            <div class="row g-3" style="width: 500px">
+                                <div class="col-md">
+                                    <div class="form-label">항목</div>
+                                    <select class="form-select" placeholder="항목" name="items" id="items" >
+                                        {{joinItemsOptions}}
+                                    </select>
+                                </div>
+                                <div class="col-md">
+                                    <div class="form-label">가입일</div>
+                                    <input type="text" class="form-control" placeholder="가입일" name="joinDate" id="joinDate" value="{{joinDate}}">
+                                </div>
+                            </div>
+
+                            <div class="row g-3" style="width: 500px">
+                                <div class="col-md">
+                                    <div class="form-label">회비납일</div>
+                                    <input type="text" class="form-control" placeholder="회비납일" name="duesDate" id="duesDate" value="{{duesDate}}">
+                                </div>
+                                <div class="col-md">
+                                    <div class="form-label">회비금액</div>
+                                    <input type="text" class="form-control" placeholder="회비금액" name="duesPrice" id="duesPrice" value="{{duesPrice}}">
+                                </div>
+                            </div>
+
+                            <div class="row g-3" style="width: 500px">
+                                <div class="col-md">
+                                    <div class="form-label">회원상태</div>
+                                    <select class="form-control" placeholder="회원상태" name="joinStatus" id="joinStatus" >
+                                        {{joinStatusOptions}}
+                                    </select>
+                                </div>
+                                <div class="col-md">
+
+                                </div>
+                            </div>
+
                             <h3 class="card-title mt-4">주소</h3>
-                            <div>
+                            <div class="row g-3" style="width: 500px">
                                 <div class="row g-2">
                                     <div class="col-auto">
                                         <input type="text" class="form-control w-auto" placeholder="우편번호" name="postcode" id="postcode" value="{{postcode}}">
@@ -113,54 +162,11 @@
                                 </div>
                             </div>
 
-                            <div class="row g-3 mt-4">
-                                <div class="col-md">
-                                    <div class="form-label">전화번호</div>
-                                    <input type="text" class="form-control" placeholder="전화번호" name="phoneNumber_1" id="phoneNumber_1" value="{{phoneNumber_1}}">
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-label">전화번호</div>
-                                    <input type="text" class="form-control" placeholder="전화번호" name="phoneNumber_2" id="phoneNumber_2" value="{{phoneNumber_2}}">
-                                </div>
-                            </div>
 
-                            <div class="row g-3 mt-4">
-                                <div class="col-md">
-                                    <div class="form-label">항목</div>
-                                    <select class="form-select" placeholder="항목" name="items" id="items" >
-                                        {{joinItemsOptions}}
-                                    </select>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-label">가입일</div>
-                                    <input type="text" class="form-control" placeholder="가입일" name="joinDate" id="joinDate" value="{{joinDate}}">
-                                </div>
-                            </div>
 
-                            <div class="row g-3 mt-4">
-                                <div class="col-md">
-                                    <div class="form-label">회비납일</div>
-                                    <input type="text" class="form-control" placeholder="회비납일" name="duesDate" id="duesDate" value="{{duesDate}}">
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-label">회비금액</div>
-                                    <input type="text" class="form-control" placeholder="회비금액" name="duesPrice" id="duesPrice" value="{{duesPrice}}">
-                                </div>
-                            </div>
 
-                            <div class="row g-3 mt-4">
-                                <div class="col-md">
-                                    <div class="form-label">회원상태</div>
-                                    <select class="form-control" placeholder="회원상태" name="joinStatus" id="joinStatus" >
-                                        {{joinStatusOptions}}
-                                    </select>
-                                </div>
-                                <div class="col-md">
 
-                                </div>
-                            </div>
-
-                            <div class="row g-3 mt-4">
+                            <div class="row g-3" style="width: 500px">
                                 <div class="col-md">
                                     <div class="form-label">비고</div>
                                     <textarea class="form-control" placeholder="비고" name="bigo" id="bigo">{{bigo}}</textarea>

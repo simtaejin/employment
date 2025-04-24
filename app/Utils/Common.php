@@ -164,11 +164,15 @@ class Common{
                 $checkDateD = substr($value, 8, 2);
             } else if ($property == 'gujigImage') {
                 $_img_path= URL.'/'.$value;
-                $_img = "<img src='{$_img_path}' class=\"signature_gujig_image\" alt=\"서명 이미지\"/>";
+                $_img = "<div class=\"signature_gujig_image\">
+                            <img src=\"{$_img_path}\" alt=\"서명 이미지\"/>
+                        </div>";
                 $signature_gujig_img = $value ? $_img : "";
             } else if ($property == 'guinImage') {
                 $_img_path= URL.'/'.$value;
-                $_img = "<img src='{$_img_path}' class=\"signature_guin_image\" alt=\"서명 이미지\"/>";
+                $_img = "<div class=\"signature_guin_image\">
+                            <img src=\"{$_img_path}\" alt=\"서명 이미지\"/>
+                        </div>";
                 $signature_guin_img = $value ? $_img : "";
             } else {
                 $$property = $value;
