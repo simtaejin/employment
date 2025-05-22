@@ -6,16 +6,19 @@ use App\Utils\View;
 use App\Http\Request;
 use WilliamCosta\DatabaseManager\Pagination;
 
-class Page {
+class Page
+{
 
-    public static function getPage($title, $content) {
+    public static function getPage($title, $content)
+    {
         return View::render('pages/page', [
             'title' => $title,
             'content' => $content
         ]);
     }
 
-    public static function getBlankPage($title, $content) {
+    public static function getBlankPage($title, $content)
+    {
         return View::render('pages/blankpage', [
             'title' => $title,
             'content' => $content
@@ -27,7 +30,7 @@ class Page {
             'label' => 'guin',
             'title' => '구인관리',
 //            'link'  => URL."/page/guin",
-            'submenu'=>[
+            'submenu' => [
                 ['label' => 'table_inquiry', 'title' => '구인관리', 'link' => URL."/page/guin"],
                 ['label' => 'chart_inquiry', 'title' => '구인회비관리', 'link' => URL."/page/guin_dues"],
             ],
@@ -37,7 +40,7 @@ class Page {
             'label' => 'gujig',
             'title' => '구직관리',
 //            'link'  => URL."/page/gujig"
-            'submenu'=>[
+            'submenu' => [
                 ['label' => 'table_inquiry', 'title' => '구직관리', 'link' => URL."/page/gujig"],
                 ['label' => 'chart_inquiry', 'title' => '구직회비관리', 'link' => URL."/page/gujig_dues"],
             ],
@@ -45,18 +48,26 @@ class Page {
         [
             'label' => 'employment',
             'title' => '취업관리',
-            'link'  => URL."/page/employment"
+            'link' => URL."/page/employment"
         ],
         [
             'label' => 'agreement',
             'title' => '소개요금약정서관리',
-            'link'  => URL."/page/agreement"
+            'link' => URL."/page/agreement"
         ],
-
+        [
+            'label' => 'oldpage',
+            'title' => '이전데이터',
+            'submenu' => [
+                ['label' => 'table_inquiry', 'title' => '이전구직데이터관리', 'link' => URL."/page/oldgujig"],
+                ['label' => 'chart_inquiry', 'title' => '이전구인데이터관리', 'link' => URL."/page/oldguin"],
+            ],
+        ],
     ];
 
 
-    public static function getDepth_1($currentModule) {
+    public static function getDepth_1($currentModule)
+    {
 
         $menus = '';
 
@@ -64,8 +75,8 @@ class Page {
             if (!array_key_exists('submenu', $v)) {
                 $menus .= View::render('pages/menu/li', [
                     'depth_1' => $v['title'],
-                    'active'  => $v['label'] == $currentModule ? 'active' : '',
-                    'link'    => $v['link'],
+                    'active' => $v['label'] == $currentModule ? 'active' : '',
+                    'link' => $v['link'],
                 ]);
             } else {
                 $menus .= View::render('pages/menu/li_dropdown', [
@@ -82,21 +93,23 @@ class Page {
         ]);
     }
 
-    public static function getDepth_2($sub_menu) {
+    public static function getDepth_2($sub_menu)
+    {
         $dropdown = '';
 
 
         foreach ($sub_menu['submenu'] as $k => $v) {
             $dropdown .= View::render('pages/menu/dropdown', [
                 'depth_2' => $v['title'],
-                'link'    => $v['link'],
+                'link' => $v['link'],
             ]);
         }
 
         return $dropdown;
     }
 
-    public static function getPanel($title, $content, $currentModule) {
+    public static function getPanel($title, $content, $currentModule)
+    {
         $contentPanel = View::render('pages/panel', [
             'menu' => self::getDepth_1($currentModule),
             'content' => $content
@@ -105,7 +118,8 @@ class Page {
         return self::getPage($title, $contentPanel);
     }
 
-    public static function getBlankPanel($title, $content, $currentModule) {
+    public static function getBlankPanel($title, $content, $currentModule)
+    {
         $contentPanel = View::render('pages/blankpanel', [
             'content' => $content
         ]);
@@ -113,10 +127,11 @@ class Page {
         return self::getBlankPage($title, $contentPanel);
     }
 
-    public static function getPagination($request, $obPagination) {
+    public static function getPagination($request, $obPagination)
+    {
         $pages = $obPagination->getPages();
 
-        if (count($pages) <=1 ) return '';
+        if (count($pages) <= 1) return '';
 
         $links = '';
 
